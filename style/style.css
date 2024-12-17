@@ -1,0 +1,389 @@
+/* BRAND BLUE COLOR = #55d4ff */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+#bodyLeft {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+
+  padding: 20px;
+  margin: 0;
+  width: 100px !important;
+  min-width: 100px !important;
+  width: 500px !important;
+  min-width: 500px !important;
+  height: 100%;
+
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+#bodyRight {
+  flex-grow: 1 !important;
+  min-width: 50px;
+  min-height: 50px;
+  box-sizing: border-box;
+  position: relative;
+  /* position: absolute; */
+  /* width: 2000px; */
+  /* height: 2000px; */
+  padding: 0;
+  margin: 0;
+}
+
+#defaultCanvas0 {
+  /* a bit of a bandaid to get rid of the p5 default canvas */
+  display: none;
+}
+
+#absoluteContainer {
+  background-color: red;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  min-width: 150px;
+  min-height: 150px;
+  max-width: 1080px;
+  max-height: 1080px;
+  display: none;
+}
+
+#renderingScreen {
+  position: absolute;
+  /* top: 0; */
+  /* left: 0; */
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(115, 201, 253, 0.8);
+  z-index: 10000;
+  backdrop-filter: blur(20px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  display: none;
+}
+
+#renderingBar {
+  width: 150px;
+  height: 25px;
+  background-color: black;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  box-sizing: border-box;
+  padding: 2px;
+}
+
+.renderingBarProgressSubIcons {
+  box-sizing: border-box;
+  width: calc(calc(100% / 6));
+  height: auto;
+
+  background-color: white;
+  border: 1px solid black;
+}
+
+#renderingText {
+  color: white;
+  font-family: monospace;
+  font-size: 20px;
+}
+
+.appTitle {
+  font-size: 25px;
+  text-align: left;
+  font-family: monospace;
+  font-weight: bold;
+}
+.appFooter {
+  text-align: left;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+#guiWrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0;
+  padding-top: 20px;
+  margin: 0;
+  /* background-color: green; */
+}
+
+.moveGUI {
+  position: relative;
+}
+#guiBottom {
+  /* width: 100%; */
+  /* height: 100%; */
+  /* position: relative; */
+  /* display: flex; */
+  /* flex-direction: column-reverse; */
+}
+
+#image-container {
+  margin: 0;
+  padding: 0;
+  overflow: 0;
+  display: flex;
+  justify-content: center;
+}
+
+#image-input {
+  /* padding-top: 10px; */
+  /* display: none; */
+  position: relative;
+  z-index: 0;
+}
+
+#badFile {
+  /* display: none; */
+  opacity: 0;
+  position: absolute;
+  background-color: red;
+  color: white;
+  /* padding: 10px; */
+  width: 100%;
+  top: 0;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: monospace;
+  font-size: large;
+  /* z-index: 1; */
+  transition: all 0.2s ease-in-out;
+}
+
+#activeImages {
+  flex-grow: 1;
+  position: relative;
+  /* width: 100%; */
+  height: 100px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 10px;
+  /* justify-content: left; */
+  /* align-items: center; */
+  /* overflow: auto; */
+  box-sizing: border-box;
+  object-fit: contain;
+  overflow-x: scroll;
+  background-color: #f7f7f7;
+  /* border: 1px solid black; */
+}
+
+#activeImages * {
+  border: 2px solid black;
+}
+
+#activeImages canvas {
+  object-fit: contain;
+}
+
+/* ********* */
+
+.dg.main {
+  /* Display none here for debugging filer yo */
+  /* display: none !important; */
+  /* position: absolute !important; */
+
+  width: 100% !important;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  color: black;
+  box-sizing: border-box !important;
+  background-color: white !important;
+  /* padding: 10px !important; */
+}
+
+.dg.main ul li {
+  background-color: white !important;
+
+  display: flex;
+}
+.dg.main ul li div {
+  background-color: white !important;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  background-color: white !important;
+}
+
+.dg.main ul li {
+  border: none;
+
+  box-sizing: border-box !important;
+  margin: 5px;
+  margin-left: 0;
+  margin-right: 0;
+}
+.folder .dg .title {
+  font-weight: bold;
+
+  color: #55d4ff;
+  border: none !important;
+}
+
+.folder .dg .cr.number.cr.number.has-slider .slider {
+  border: 1px solid black !important;
+  border-radius: 10px !important;
+}
+
+.cr.string .c * {
+  width: 15% !important;
+  background-color: white !important;
+  color: black !important;
+  box-sizing: border-box !important;
+  padding-left: 3px !important;
+  border: 1px solid black !important;
+}
+
+.cr.number .c div input {
+  /* width: 15% !important; */
+  box-sizing: border-box !important;
+  padding-left: 3px !important;
+  background-color: white !important;
+  color: black !important;
+  border: 1px solid black !important;
+}
+
+.folder .dg * {
+  margin: 0px;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  color: black;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.dg.main ul li {
+  border-left: none !important;
+}
+.dg .c .slider {
+  background-color: white !important;
+  box-sizing: border-box;
+  margin-left: 5px !important;
+  border: 1px solid black;
+  border-radius: 10px !important;
+}
+.dg .c .slider-fg {
+  /* border-radius: 10px; */
+  border-radius: 10px !important;
+  background-color: #55d4ff !important;
+}
+
+.close-bottom {
+  /* display: none; */
+  box-sizing: border-box !important;
+  background: lightgray !important;
+  border: 1px solid black !important;
+  color: black;
+}
+
+#closeGui {
+  margin-top: 10px;
+  width: 100%;
+  /* display: none; */
+  /* left: 15px; */
+  /* bottom: 21px; */
+  /* position: absolute; */
+  /* z-index: 1; */
+  /* box-sizing: border-box !important; */
+  border: 1px solid #55d4ff;
+  padding: 2px;
+  border-radius: 10px;
+  background: white !important;
+  /* border: 1px solid black !important; */
+  /* color: black; */
+}
+
+#closeGui:hover {
+  background: #55d4ff !important;
+  color: white !important;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+#statsDisplay {
+  /* display: none; */
+  position: absolute !important;
+
+  /* z-index: 2; */
+  /* top: 0; */
+}
+
+.dg.main ul .folder {
+  border-top: 1px solid black !important;
+}
+
+.dg.main ul .cr.boolean {
+  margin-left: -5px;
+}
+
+.dg.main ul .cr.number.has-slider {
+  margin-left: -5px;
+}
+
+.title-class {
+  border-top: 2px solid black !important;
+  color: #55d4ff !important;
+  font-weight: bold;
+}
+
+#loadIconDiv {
+  position: absolute;
+  /* display: none; */
+  /* z-index: 10; */
+  left: 0;
+  top: 0;
+  background-color: rgba(255, 255, 255, 1);
+  display: block;
+}
+
+#arcCont {
+  position: absolute;
+}
+
+#animatedArc {
+  opacity: 1;
+  fill: none;
+  stroke: black;
+}

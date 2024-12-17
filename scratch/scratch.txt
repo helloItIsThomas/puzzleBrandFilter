@@ -1,0 +1,37 @@
+
+
+Consider these files, then consider my instructions on how to update them. Note that we are currently treating two images, transitioning between them on a clock in the sketch.js file. We are running the imageLoaded function once for sv.animUnderImgs.imgs[0], then once for sv.animUnderImgs.imgs[1], then we go back to sv.animUnderImgs.imgs[0], and so on. This is important.
+
+Currently, the imageLoaded function is finding a single image to populate each cell with. Instead of a single static image, imagine 3 parent images.
+Each cell will contain a new instance of each of these 3 parent images. Instead of these images being static, they will each have their own variable x position, which will be updated each time the cell enters a new state. 
+
+~~~
+We will want to separate finding the state indices of each cell from the interpolation animation of the x positions of each of the cell's images.
+
+Right now we are finding a single image at setup and every time the user updates the sourceImg.
+I think now we want to find an "image" (state) for every frame in the sourceImg.
+Therefore, we want to call a version of imageLoaded once at the beginning. imageLoaded should not be done separatley for each image. It should take in a group of images.
+
+Each cell should have:
+1 gridIndex,
+n xPos,
+1 yPos, 
+n brightness,
+1 width,
+1 height,
+
+if we pass >1 image to imageLoaded, it should pass those images to updateCellData.
+
+~~~
+
+Upon updating, each x value will interpolate between its previous value and the new value. The new value will be accessed from the given state object. This movement will be referred to as an animation. 
+
+To achieve this, we will replace the calculateBrightnessValues function with a new function. This new function should 
+
+Each animation has an index, and the value of this index determines what state the cell is at. Each index will provide an x position for each of the cell's three png images, determining how to position each of these png's.
+
+The index for each cell will be provided by the existing pickSlidingTile function. 
+
+This animation is achieved by moving the x position of three png's contained in each cell in predetermined ways. There are 9 possible indexes, one for each state, though it is important to note that we will be animating the transitions between states as well. 
+
+For each state, each of the three png's will be set to a x axis position. 
