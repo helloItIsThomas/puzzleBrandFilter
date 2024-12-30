@@ -49,6 +49,6 @@ void main() {
 
     vec2 debugUV = vec2((vUV.x / atlasColCount) + (mod((1.0 / atlasColCount) * xi, 1.0)), (vUV.y / atlasRowCount) + (mod((1.0 / atlasRowCount) * yi, 1.0)));
 
-    // gl_FragColor = texture2D(atlasTex, debugUV);
-    gl_FragColor = vec4(debugV0.x, 0.0, 0.0, 1.0);
+    gl_FragColor = texture2D(atlasTex, debugUV);
+    // gl_FragColor = vec4(debugV0.x, 0.0, 0.0, 1.0);
 }
