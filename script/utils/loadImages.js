@@ -66,7 +66,6 @@ const loadASetupIcon = (path) => {
       console.log("Error loading SVG: " + err);
       reject(err);
     };
-    console.log(" °° loadSSetupIcon has just finished °° ");
     img.src = path;
   });
 };
@@ -76,6 +75,7 @@ export async function updateSvgIcons() {
   await Promise.all(
     sv.singleImgIconPaths.map(async (path) => {
       const icon = await loadASetupIcon(path);
+      console.log(icon);
       sv.singleImgIcons.push(icon);
     })
   );
