@@ -36,6 +36,8 @@ export function createGraphicsForSingleImage() {
         console.log("i: ", i);
         // const vanillaCanvas = sv.singleImgIcons[i++];
         const vanillaCanvas = sv.singleImgIcons[0];
+
+        console.log(vanillaCanvas);
         // i think this is where the error is coming from.
         const imageData = vanillaCanvas
           .getContext("2d")
