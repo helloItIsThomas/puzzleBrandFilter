@@ -51,9 +51,9 @@ async function mySetup() {
   createInput();
   showLoadIcon();
 
-  loadSetupImages();
+  await loadSetupImages();
 
-  updateSvgIcons();
+  await updateSvgIcons();
   recalculateGrid();
 
   // updateClock();
