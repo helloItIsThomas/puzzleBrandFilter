@@ -66,9 +66,9 @@ const loadASetupIcon = (path) => {
       console.log("Error loading SVG: " + err);
       reject(err);
     };
+    console.log(" °° loadSSetupIcon has just finished °° ");
     img.src = path;
   });
-  console.log(" °° loadSSetupIcon has just finished °° ");
 };
 
 export async function updateSvgIcons() {
