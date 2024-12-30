@@ -47,17 +47,6 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
 
   const imgs = processedImages;
 
-  //    • figure out how we are handling 2 images of different sizes. ATTEMPTING TO FIX THIS NOW.
-  // this assumes all background images are the same size and aspect ratio(?)
-  // set the gridW and gridH to the maximum of both images
-
-  // if (imgs.length > 1) {
-  // sv.gridW = Math.max(imgs[0].width, imgs[1].width);
-  // sv.gridH = Math.max(imgs[0].height, imgs[1].height);
-  // } else {
-  // sv.gridW = imgs[0].width;
-  // sv.gridH = imgs[0].height;
-  // }
   sv.gridW = imgs[0].width;
   sv.gridH = imgs[0].height;
 
