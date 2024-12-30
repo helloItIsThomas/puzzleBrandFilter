@@ -30,6 +30,7 @@ export function createGraphicsForSingleImage() {
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
       console.log(sv.singleImgIcons, sv.singleImgIcons.length);
+      console.log("i: ", i);
       const vanillaCanvas = sv.singleImgIcons[i++];
       // i think this is where the error is coming from.
       const imageData = vanillaCanvas
