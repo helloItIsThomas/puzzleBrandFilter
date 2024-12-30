@@ -51,7 +51,7 @@ async function mySetup() {
   createInput();
   showLoadIcon();
 
-  await loadSetupImages();
+  loadSetupImages();
 
   updateSvgIcons();
   recalculateGrid();
