@@ -29,31 +29,32 @@ export function createGraphicsForSingleImage() {
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
-      console.log(sv.singleImgIcons, sv.singleImgIcons.length);
-      console.log("i: ", i);
-      // const vanillaCanvas = sv.singleImgIcons[i++];
-      const vanillaCanvas = sv.singleImgIcons[0];
-      // i think this is where the error is coming from.
-      const imageData = vanillaCanvas
-        .getContext("2d")
-        .getImageData(0, 0, vanillaCanvas.width, vanillaCanvas.height);
-      const p5TempCanvas = sv.p.createImage(
-        vanillaCanvas.width,
-        vanillaCanvas.height
-      );
-      p5TempCanvas.loadPixels();
-      for (let i = 0; i < imageData.data.length; i++) {
-        p5TempCanvas.pixels[i] = imageData.data[i];
-      }
-      p5TempCanvas.updatePixels();
-      pg.image(
-        p5TempCanvas,
-        x * iconW + (iconW * 0.5 - iconW * borderScaler * 0.5),
-        y * iconH + (iconH * 0.5 - iconH * borderScaler * 0.5),
-        iconW * borderScaler,
-        iconH * borderScaler
-      );
-      // p5TempCanvas is perfectly sharp here.
+      if (sv.singleImgIcons[i]) {
+        console.log(sv.singleImgIcons, sv.singleImgIcons.length);
+        console.log("i: ", i);
+        // const vanillaCanvas = sv.singleImgIcons[i++];
+        const vanillaCanvas = sv.singleImgIcons[0];
+        // i think this is where the error is coming from.
+        const imageData = vanillaCanvas
+          .getContext("2d")
+          .getImageData(0, 0, vanillaCanvas.width, vanillaCanvas.height);
+        const p5TempCanvas = sv.p.createImage(
+          vanillaCanvas.width,
+          vanillaCanvas.height
+        );
+        p5TempCanvas.loadPixels();
+        for (let i = 0; i < imageData.data.length; i++) {
+          p5TempCanvas.pixels[i] = imageData.data[i];
+        }
+        p5TempCanvas.updatePixels();
+        pg.image(
+          p5TempCanvas,
+          x * iconW + (iconW * 0.5 - iconW * borderScaler * 0.5),
+          y * iconH + (iconH * 0.5 - iconH * borderScaler * 0.5),
+          iconW * borderScaler,
+          iconH * borderScaler
+        );
+      } else console.log("NO IMAGE FOUND FOR INDEX ", i);
     }
   }
 
