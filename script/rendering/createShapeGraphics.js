@@ -9,7 +9,7 @@ export function createGraphicsForSingleImage() {
   const atlasColCount = 5;
   const atlasRowCount = 4;
 
-  const borderScaler = 0.95;
+  const borderScaler = 1.0;
   const oW = sv.singleImgIcons[0].width;
   const oH = sv.singleImgIcons[0].height;
   const atlasW = oW * atlasColCount;

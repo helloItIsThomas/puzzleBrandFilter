@@ -52,10 +52,10 @@ export async function shaderRendering() {
     // assuming the grid of both images is the same...
     const cell = sv.stills[0].cells[i];
     sv.triangles[i] = {
-      x: cell.x + offsetWidth,
-      y: cell.y + offsetHeight,
       // x: cell.x,
       // y: cell.y,
+      x: cell.x + offsetWidth,
+      y: cell.y + offsetHeight,
       speed: 1.0,
     };
   }
@@ -200,6 +200,8 @@ function createResources(noiseCanvas) {
       vTlThresh1: { value: sv.tlThresh1, type: "f32" },
       vTlThresh2: { value: sv.tlThresh2, type: "f32" },
       vTlThresh3: { value: sv.tlThresh3, type: "f32" },
+      vCellW: { value: sv.cellW, type: "f32" },
+      vCellH: { value: sv.cellH, type: "f32" },
       manualScale: { value: 0.999, type: "f32" },
       gridResolution: { value: sv.gridResolution, type: "f32" },
       rowCount: { value: sv.rowCount, type: "f32" },
