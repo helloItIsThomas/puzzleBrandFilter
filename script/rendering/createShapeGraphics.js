@@ -10,12 +10,11 @@ export function createGraphicsForSingleImage() {
   const atlasRowCount = 4;
 
   const borderScaler = 1.0;
-  const oW = sv.singleImgIcons[0].width;
-  const oH = sv.singleImgIcons[0].height;
-  const atlasW = oW * atlasColCount;
-  const atlasH = oH * atlasRowCount;
-  const iconW = sv.singleImgIcons[0].width;
-  const iconH = sv.singleImgIcons[0].height;
+  // DEBUGGING HERE //
+  const iconW = sv.cellW; //sv.singleImgIcons[0].width;
+  const iconH = sv.cellH; //sv.singleImgIcons[0].height;
+  const atlasW = iconW * atlasColCount;
+  const atlasH = iconH * atlasRowCount;
 
   if (sv.createGraphicsForSingleImageGraphic) {
     sv.createGraphicsForSingleImageGraphic.remove();
@@ -32,10 +31,8 @@ export function createGraphicsForSingleImage() {
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
       if (sv.singleImgIcons[i]) {
-        // const vanillaCanvas = sv.singleImgIcons[i++];
-        const vanillaCanvas = sv.singleImgIcons[0];
+        const vanillaCanvas = sv.singleImgIcons[i++];
 
-        // i think this is where the error is coming from.
         const imageData = vanillaCanvas
           .getContext("2d")
           .getImageData(0, 0, vanillaCanvas.width, vanillaCanvas.height);

@@ -12,11 +12,13 @@ export function handleImgInputAtRuntime(p) {
 
   sv.tempUploadFiles.forEach((_file) => {
     if (_file.type === "image") {
-      p.loadImage(_file.data, function (img) {
+      p.loadImage(_file.data, async function (img) {
         sv.animUnderImgs.push(img);
         if (sv.animUnderImgs.length === sv.totalSourceUploadNum) {
           updateActiveImgBar();
-          recalculateGrid();
+          const passMeImgs = await recalculateGrid();
+          await updateSvgIcons();
+          await updateCellData(passMeImgs);
         }
       });
     } else {
@@ -38,7 +40,6 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
   // Preprocess images
   const processedImages = _imgs.map((img) => {
     img = fitImageToWindow(img, resizeTo);
-    // check if both images are the same size and aspect ratio.
 
     const processed = img.get();
     processed.filter(sv.p.GRAY);
@@ -68,7 +69,8 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
   sv.xExcess = (sv.cellW * sv.colCount) / sv.gridW;
   sv.yExcess = (sv.cellH * sv.rowCount) / sv.gridH;
 
-  await updateCellData(imgs);
+  return imgs;
+  // await updateCellData(imgs);
 }
 
 export function updateActiveImgBar() {
@@ -137,10 +139,11 @@ window.addEventListener("resize", () => {
     gsap.to("#bodyRight", { opacity: 0, duration: 0.1 });
   }
 
-  resizeTimeout = setTimeout(() => {
+  resizeTimeout = setTimeout(async () => {
     initializeLoadIcon();
-    recalculateGrid();
-    updateSvgIcons();
+    const passMeImgs = await recalculateGrid();
+    await updateSvgIcons();
+    await updateCellData(passMeImgs);
 
     resizingStarted = false; // Reset for next resize
   }, 500); // Adjust timeout as needed

@@ -14,6 +14,7 @@ import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
 import { downloadCanvas } from "./utils/utils.js";
 import { stopRecording } from "./utils/recording";
 import { createStatsGUI } from "./utils/stats.js";
+import { updateCellData } from "./imgProcessing/imageProcessing.js";
 
 let resizeAppToMe = document.getElementById("bodyRight");
 
@@ -53,8 +54,9 @@ async function mySetup() {
 
   await loadSetupImages();
 
-  recalculateGrid();
-  updateSvgIcons();
+  const passMeImgs = await recalculateGrid();
+  await updateSvgIcons();
+  await updateCellData(passMeImgs);
 
   // updateClock();
   sv.setupDone = true;

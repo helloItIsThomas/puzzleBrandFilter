@@ -210,11 +210,12 @@ const threshController3 = general
   .add(sv, "tlThresh3", 0.0, 1.0)
   .name("tlThresh3");
 
-colorController.onChange((value) => {
+colorController.onChange(async (value) => {
   if (value) sv.fillColor = sv.brandBlueConst;
   else sv.fillColor = "#000000";
-  recalculateGrid();
-  updateSvgIcons();
+  const passMeImgs = await recalculateGrid();
+  await updateSvgIcons();
+  await updateCellData(passMeImgs);
 });
 speedController.onChange((value) => {
   sv.speed = value;
@@ -235,7 +236,7 @@ threshController2.onChange((value) => {});
 threshController3.onChange((value) => {});
 
 const inputField = gridResController.domElement.querySelector("input");
-inputField.addEventListener("keydown", (event) => {
+inputField.addEventListener("keydown", async (event) => {
   const value = parseInt(inputField.value, 10);
   if (value !== sv.gridResolution) {
     if (event.key === "Enter") {
@@ -243,8 +244,9 @@ inputField.addEventListener("keydown", (event) => {
         if (value < 400) sv.gridResolution = value;
         else sv.gridResolution = 400;
         if (value == 0) sv.gridResolution = 1;
-        recalculateGrid();
-        updateSvgIcons();
+        const passMeImgs = await recalculateGrid();
+        await updateSvgIcons();
+        await updateCellData(passMeImgs);
       }
     }
   }

@@ -33,9 +33,9 @@ export async function startRecording() {
     sv.ticker.stop();
     document.getElementById("renderingScreen").style.display = "flex";
     await resizeAbsoluteContainerForRecording();
-    // recalculate grid is running / finishing too late
-    recalculateGrid("absoluteContainer"); //await
-    updateSvgIcons(); //await
+    const passMeImgs = await recalculateGrid("absoluteContainer");
+    await updateSvgIcons();
+    await updateCellData(passMeImgs);
 
     await setupRecorder();
 
@@ -59,8 +59,9 @@ export async function stopRecording() {
     bodyRight.appendChild(sv.pApp.canvas);
 
     sv.pApp.resizeTo = bodyRight;
-    recalculateGrid();
-    updateSvgIcons();
+    const passMeImgs = await recalculateGrid();
+    await updateSvgIcons();
+    await updateCellData(passMeImgs);
 
     aCont.style.display = "none";
     document.getElementById("renderingScreen").style.display = "none";
