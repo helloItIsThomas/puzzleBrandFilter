@@ -68,6 +68,7 @@ const loadASetupIcon = (path) => {
     };
     img.src = path;
   });
+  console.log(" °° loadSSetupIcon has just finished °° ");
 };
 
 export async function updateSvgIcons() {

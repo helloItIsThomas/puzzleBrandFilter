@@ -62,8 +62,6 @@ export function createGraphicsForSingleImage() {
     }
   }
 
-  console.log(sv.singleImgIcons[0]);
-
   return pg;
 }
 
