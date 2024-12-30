@@ -29,9 +29,9 @@ export function createGraphicsForSingleImage() {
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
+      console.log(sv.singleImgIcons, sv.singleImgIcons.length);
       const vanillaCanvas = sv.singleImgIcons[i++];
       // i think this is where the error is coming from.
-      console.log(atlasRowCount, atlasColCount);
       const imageData = vanillaCanvas
         .getContext("2d")
         .getImageData(0, 0, vanillaCanvas.width, vanillaCanvas.height);
