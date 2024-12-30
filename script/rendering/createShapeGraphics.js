@@ -26,6 +26,8 @@ export function createGraphicsForSingleImage() {
   pg.pixelDensity(2);
   sv.createGraphicsForSingleImageGraphic = pg;
 
+  console.log("sanity check");
+
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
