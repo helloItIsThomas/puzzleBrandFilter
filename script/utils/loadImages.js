@@ -48,6 +48,7 @@ const loadASetupIcon = (path) => {
 
     let svgResolution = (sv.gridW / sv.gridResolution) * 2;
 
+    console.log("svgResolution: ", svgResolution);
     canvas.width = svgResolution;
     canvas.height = svgResolution;
 

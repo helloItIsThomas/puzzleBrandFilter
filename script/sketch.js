@@ -53,8 +53,8 @@ async function mySetup() {
 
   await loadSetupImages();
 
-  updateSvgIcons();
   recalculateGrid();
+  updateSvgIcons();
 
   // updateClock();
   sv.setupDone = true;
