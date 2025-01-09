@@ -9,7 +9,7 @@ export function createGraphicsForSingleImage() {
   const atlasColCount = 5;
   const atlasRowCount = 4;
 
-  const borderScaler = 1.0;
+  const borderScaler = 0.95;
   // DEBUGGING HERE //
   const iconW = sv.cellW; //sv.singleImgIcons[0].width;
   const iconH = sv.cellH; //sv.singleImgIcons[0].height;
@@ -24,8 +24,6 @@ export function createGraphicsForSingleImage() {
   const pg = sv.p.createGraphics(atlasW, atlasH);
   pg.pixelDensity(2);
   sv.createGraphicsForSingleImageGraphic = pg;
-
-  console.log("sanity check");
 
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {

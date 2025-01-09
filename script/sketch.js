@@ -40,7 +40,7 @@ async function mySetup() {
   sv.ticker = new Ticker();
   sv.ticker.autoStart = false;
   sv.ticker.add(() => {
-    sv.clock += sv.speed * 0.5;
+    sv.clock += sv.speed;
     render();
   });
   sv.ticker.stop();

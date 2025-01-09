@@ -48,7 +48,6 @@ const loadASetupIcon = (path) => {
 
     let svgResolution = (sv.gridW / sv.gridResolution) * 2;
 
-    console.log("svgResolution: ", svgResolution);
     canvas.width = svgResolution;
     canvas.height = svgResolution;
 
@@ -76,7 +75,6 @@ export async function updateSvgIcons() {
   await Promise.all(
     sv.singleImgIconPaths.map(async (path) => {
       const icon = await loadASetupIcon(path);
-      console.log(icon);
       sv.singleImgIcons.push(icon);
     })
   );

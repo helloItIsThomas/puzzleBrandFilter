@@ -3,6 +3,7 @@ import { Recorder } from "canvas-record";
 import { AVC } from "media-codecs";
 import { recalculateGrid } from "./eventHandlers";
 import { updateSvgIcons } from "./loadImages";
+import { updateCellData } from "../imgProcessing/imageProcessing";
 import { sv } from "./variables.js";
 
 export async function resizeAbsoluteContainerForRecording() {

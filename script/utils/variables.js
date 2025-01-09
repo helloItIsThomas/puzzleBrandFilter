@@ -35,7 +35,7 @@ export const sv = {
   sceneContainerFrame2: null,
   aPositionBuffer: null,
   ticker: null,
-  frameRate: 30,
+  frameRate: 60,
   spinnyBG: null,
   triangleMesh: null,
   instancePositionBuffer: null,
@@ -66,7 +66,7 @@ export const sv = {
   manualScale: 1.0,
   transitionSpeed: 3000.0,
   transitionDelay: 0.5,
-  speed: 0.05,
+  speed: 0.025,
   color: false,
   fillColor: "#000",
   brandBlueConst: "#55d4ff",
@@ -75,8 +75,8 @@ export const sv = {
     // coU: 0,
     clipDarkOutliers: 0,
     clipLightOutliers: 0,
-    scaleDynamically: true,
-    sdU: 1,
+    scaleDynamically: false,
+    sdU: 0,
     startInvisible: false,
     siU: 0,
   },
@@ -127,8 +127,8 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolutionBuffer: "200",
-  gridResolution: "200",
+  gridResolutionBuffer: "20",
+  gridResolution: "20",
   noiseOffset: 0.0,
 
   tlThresh1: 0.15,
@@ -142,7 +142,7 @@ export const sv = {
   testImages: null,
 
   isRecording: false,
-  recordDuration: 5,
+  recordDuration: 2,
   takeScreenshot: false,
   tempUploadFiles: [],
 
@@ -193,7 +193,8 @@ const speedController = general.add(sv, "speed", 0.0, 0.1).name("Speed");
 const colorController = general.add(sv, "color", false).name("Color");
 
 const manualScaleController = general
-  .add(sv, "manualScale", 0.0, 0.99, 0.01)
+  // .add(sv, "manualScale", 0.0, 0.99, 0.01)
+  .add(sv, "manualScale", 0.0, 1.0, 0.01)
   .name("Manual Scale");
 
 // const noiseController = general
@@ -228,7 +229,8 @@ speedController.onChange((value) => {
 manualScaleController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.manualScale = Math.min(
     value,
-    0.9999999
+    1.0
+    // 0.9999999
   );
 });
 threshController1.onChange((value) => {});

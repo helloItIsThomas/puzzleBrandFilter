@@ -202,7 +202,8 @@ function createResources(noiseCanvas) {
       vTlThresh3: { value: sv.tlThresh3, type: "f32" },
       vCellW: { value: sv.cellW, type: "f32" },
       vCellH: { value: sv.cellH, type: "f32" },
-      manualScale: { value: 0.999, type: "f32" },
+      // manualScale: { value: 0.999, type: "f32" },
+      manualScale: { value: 1.0, type: "f32" },
       gridResolution: { value: sv.gridResolution, type: "f32" },
       rowCount: { value: sv.rowCount, type: "f32" },
       colCount: { value: sv.colCount, type: "f32" },
@@ -229,6 +230,8 @@ function createResources(noiseCanvas) {
   const textures = graphics.map(
     (canvas) => new Texture({ source: new ImageSource({ resource: canvas }) })
   );
+
+  // downloadCanvas(textures[0].source.resource);
 
   // Mode-specific textures
   const modeSpecificTextures =
