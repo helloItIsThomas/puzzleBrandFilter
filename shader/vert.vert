@@ -85,7 +85,17 @@ void main() {
         if(sD == 1) {
             scale = mod(vTime + brightness + noise, modValue);
         } else if(sI == 1) {
-            scale = map(vTime + noise, vNoisyMin, vNoisyMax + (manualScale * vNoiseLevel), 0.0, manualScale * vTime);
+            //   let wave = sv.p.sin(sv.clock);
+            // wave = sv.p.atan(sharp * wave) / sv.p.atan(sharp);
+            // wave = sv.p.map(wave, - 1, 1, 0, 1.05);
+            // sv.pauseClock = wave;
+            float sharp = 10.0;
+            float wave = sin(vTime + noise);
+            wave = atan(sharp * wave) / atan(sharp);
+            wave = map(wave, -1.0, 1.0, 0.0, manualScale);
+            scale = wave;
+
+            // scale = map(vTime + noise, vNoisyMin, vNoisyMax + (manualScale * vNoiseLevel), 0.0, manualScale * vTime);
         }
         if(brightness < clipDarkOutliers || brightness > 1.0 - clipLightOutliers) {
             scale = 0.25;

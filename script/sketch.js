@@ -120,4 +120,6 @@ export async function updateClock() {
   wave = sv.p.atan(sharp * wave) / sv.p.atan(sharp);
   wave = sv.p.map(wave, -1, 1, 0, 1.05);
   sv.pauseClock = wave;
+
+  sv.pauseClock = sv.clock;
 }
