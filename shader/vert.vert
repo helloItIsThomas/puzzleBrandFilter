@@ -38,18 +38,6 @@ float map(float value, float inMin, float inMax, float outMin, float outMax) {
     return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
 }
 
-vec2 map(vec2 value, vec2 inMin, vec2 inMax, vec2 outMin, vec2 outMax) {
-    return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
-}
-
-vec3 map(vec3 value, vec3 inMin, vec3 inMax, vec3 outMin, vec3 outMax) {
-    return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
-}
-
-vec4 map(vec4 value, vec4 inMin, vec4 inMax, vec4 outMin, vec4 outMax) {
-    return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
-}
-
 void main() {
 
     float clock = vTime;
@@ -85,17 +73,14 @@ void main() {
         if(sD == 1) {
             scale = mod(vTime + brightness + noise, modValue);
         } else if(sI == 1) {
-            //   let wave = sv.p.sin(sv.clock);
-            // wave = sv.p.atan(sharp * wave) / sv.p.atan(sharp);
-            // wave = sv.p.map(wave, - 1, 1, 0, 1.05);
-            // sv.pauseClock = wave;
+            // scale = map(vTime + noise, vNoisyMin, vNoisyMax + (manualScale * vNoiseLevel), 0.0, manualScale * vTime);
+
             float sharp = 10.0;
             float wave = sin(vTime + noise);
             wave = atan(sharp * wave) / atan(sharp);
             wave = map(wave, -1.0, 1.0, 0.0, manualScale);
             scale = wave;
 
-            // scale = map(vTime + noise, vNoisyMin, vNoisyMax + (manualScale * vNoiseLevel), 0.0, manualScale * vTime);
         }
         if(brightness < clipDarkOutliers || brightness > 1.0 - clipLightOutliers) {
             scale = 0.25;

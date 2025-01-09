@@ -25,7 +25,8 @@ export async function loadSetupImages() {
   );
 
   // const sourceImgPaths = ["/assets/studio.png", "/assets/puzzle.png"];
-  const sourceImgPaths = ["/assets/DEMO.png"];
+  const sourceImgPaths = ["/assets/satan.png", "/assets/soundtrack.jpg"];
+  // const sourceImgPaths = ["/assets/DEMO.png"];
   sv.totalSourceUploadNum = sourceImgPaths.length;
 
   sv.animUnderImgs = [];

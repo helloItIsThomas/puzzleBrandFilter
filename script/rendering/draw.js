@@ -14,12 +14,13 @@ export function draw() {
     uniforms.vTlThresh3 = sv.tlThresh3;
 
     if (!sv.oneActiveImage) {
-      uniforms.time = sv.pauseClock;
+      // uniforms.time = sv.pauseClock;
+      uniforms.time = sv.clock;
       uniforms.vTime = 1.0;
     } else {
       if (sv.params.startInvisible) {
-        uniforms.time = sv.pauseClock;
-        uniforms.vTime = sv.pauseClock;
+        uniforms.time = sv.clock;
+        uniforms.vTime = sv.clock;
       } else {
         uniforms.time = sv.clock;
         uniforms.vTime = sv.clock;

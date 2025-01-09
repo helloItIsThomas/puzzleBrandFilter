@@ -25,6 +25,10 @@ uniform float tlThresh1;
 uniform float tlThresh2;
 uniform float tlThresh3;
 
+float map(float value, float inMin, float inMax, float outMin, float outMax) {
+    return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
+}
+
 float ease(float t, float easeFactor) {
     // Ensure easeFactor is between 0.5 and 2 for reasonable curve control
     easeFactor = mix(0.2, 3.0, easeFactor);
@@ -55,7 +59,14 @@ void main() {
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float noise = texture2D(noiseTex, bTexUV).r * noiseLevel;
 
-    float clock = mod(time, 1.1);
+    // float sharp = 10.0;
+    float sharp = 5.0;
+    float backForthClock = sin(time + noise);
+    backForthClock = atan(sharp * backForthClock) / atan(sharp);
+    backForthClock = map(backForthClock, -1.0, 1.0, 0.0, 1.05);
+    // float clock = mod(backForthClock, 1.0);
+    float clock = backForthClock;
+    // float clock = mod(time, 1.1);
 
     // If using bTex2
     // if(numBTexes == 2) {
