@@ -99,9 +99,14 @@ export async function shaderRendering() {
   sv.noiseCanvasGraphic = noiseCanvas;
 
   let n = 0;
+  sv.noisyValues = [];
   for (let y = 0; y < sv.rowCount; y++) {
     for (let x = 0; x < sv.colCount; x++) {
+      // const noisyValue = sv.p.noise(n * sv.p.noise(n / sv.gridResolution));
       const noisyValue = sv.p.noise(n);
+      sv.noisyValues.push(noisyValue);
+      sv.noisyMax = sv.p.max(sv.noisyMax, noisyValue);
+      sv.noisyMin = sv.p.min(sv.noisyMin, noisyValue);
       noiseCanvas.set(x, y, sv.p.color(noisyValue * 255));
       n++;
     }
@@ -203,7 +208,7 @@ function createResources(noiseCanvas) {
       vCellW: { value: sv.cellW, type: "f32" },
       vCellH: { value: sv.cellH, type: "f32" },
       // manualScale: { value: 0.999, type: "f32" },
-      manualScale: { value: 1.0, type: "f32" },
+      manualScale: { value: 1.05, type: "f32" },
       gridResolution: { value: sv.gridResolution, type: "f32" },
       rowCount: { value: sv.rowCount, type: "f32" },
       colCount: { value: sv.colCount, type: "f32" },
@@ -216,8 +221,12 @@ function createResources(noiseCanvas) {
       clipLightOutliers: { value: 0.0, type: "f32" },
       noiseLevel: { value: sv.noiseOffset, type: "f32" },
       vNoiseLevel: { value: sv.noiseOffset, type: "f32" },
+      vNoisyMin: { value: sv.noisyMin, type: "f32" },
+      vNoisyMax: { value: sv.noisyMax, type: "f32" },
     },
   };
+  console.log("noisyMin: ", sv.noisyMin);
+  console.log("noisyMax: ", sv.noisyMax);
 
   const graphics = sv.oneActiveImage
     ? [sv.iconAtlas.canvas]

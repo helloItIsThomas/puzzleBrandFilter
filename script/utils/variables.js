@@ -77,8 +77,8 @@ export const sv = {
     clipLightOutliers: 0,
     scaleDynamically: false,
     sdU: 0,
-    startInvisible: false,
-    siU: 0,
+    startInvisible: true,
+    siU: 1,
   },
   totalSourceUploadNum: null,
   advanced: null,
@@ -115,7 +115,9 @@ export const sv = {
   shapes: [],
   shapes2: [],
   noiseTex: null,
-  noisyValues: null,
+  noisyValues: [],
+  noisyMax: null,
+  noisyMin: null,
 
   rowCount: null,
   colCount: null,
@@ -127,9 +129,9 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolutionBuffer: "20",
-  gridResolution: "20",
-  noiseOffset: 0.0,
+  gridResolutionBuffer: "50",
+  gridResolution: "50",
+  noiseOffset: 1.0,
 
   tlThresh1: 0.15,
   tlThresh1BUFFER: 0.01,
@@ -198,9 +200,9 @@ const manualScaleController = general
   // .add(sv, "manualScale", 0.0, 1.06, 0.01)
   .name("Manual Scale");
 
-// const noiseController = general
-// .add(sv, "noiseOffset", 0, 1, 0.01)
-// .name("Noise Offset");
+const noiseController = general
+  .add(sv, "noiseOffset", 0, 1, 0.01)
+  .name("Noise Offset");
 
 const threshController1 = general
   .add(sv, "tlThresh1", 0.0, 1.0)
@@ -223,16 +225,17 @@ speedController.onChange((value) => {
   sv.speed = value;
   updateClock();
 });
-// noiseController.onChange((value) => {
-// sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
-// sv.triangleMesh.shader.resources.waveUniforms.uniforms.vNoiseLevel = value;
-// });
 manualScaleController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.manualScale = Math.min(
     value,
     1.05
     // 0.9999999
   );
+});
+
+noiseController.onChange((value) => {
+  sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
+  sv.triangleMesh.shader.resources.waveUniforms.uniforms.vNoiseLevel = value;
 });
 threshController1.onChange((value) => {});
 threshController2.onChange((value) => {});

@@ -15,6 +15,7 @@
     "canvas-context": "^3.3.0",
     "canvas-record": "^5.1.0",
     "dat.gui": "^0.7.9",
+    "glsl-map": "^1.0.1",
     "gsap": "^3.12.5",
     "p5": "^1.9.2",
     "p5.js-svg": "^1.5.1",
