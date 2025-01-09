@@ -114,25 +114,7 @@ function render() {
   sv.stats.end();
 }
 
-// the updateClock function populates the pauseClock variable.
-// it sets pauseClock to 1, then delay, then 0, then delay, etc.
-// the main problem is that once started, it appears to not be able to be dynamically changed.
-
 export async function updateClock() {
-  // const sharp = 10;
-  // let wave = sv.p.sin(sv.clock);
-  // wave = sv.p.atan(sharp * wave) / sv.p.atan(sharp);
-  // wave = sv.p.map(wave, -1, 1, 0, 1.05);
-  // sv.pauseClock = wave;
-
-  // lets temperarily change this to a noisy value.
-  // it should always resolve to 0 or 1.05.
-
-  // if i pass a single clock to all vertices,
-  // i will need to offset them in the shader.
-  // i can do this by passing a noise value to each vertex.
-  //
-
   const sharp = 10;
   let wave = sv.p.sin(sv.clock);
   wave = sv.p.atan(sharp * wave) / sv.p.atan(sharp);

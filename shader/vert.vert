@@ -85,14 +85,7 @@ void main() {
         if(sD == 1) {
             scale = mod(vTime + brightness + noise, modValue);
         } else if(sI == 1) {
-            // this is going from 0 to 1.05.
-            // however I need to offset it with a noise value 
-            // if I just add noise to it, it will no longer resolve to 0 or 1.05.
-            // it will resolve to
-            // thisNoise + 0 and thisNoise + 1.05
-            // 
             scale = map(vTime + noise, vNoisyMin, vNoisyMax + (manualScale * vNoiseLevel), 0.0, manualScale * vTime);
-            // scale = vTime + noise;
         }
         if(brightness < clipDarkOutliers || brightness > 1.0 - clipLightOutliers) {
             scale = 0.25;
