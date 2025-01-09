@@ -54,11 +54,13 @@ void main() {
     vec4 testLerp = mix(bTexColor, bTexColor2, clock);
     brightness = testLerp.r;
 
-    float modValue = 1.00001;
-    // float modValue = 1.0;
+    // float modValue = 1.001;
+    float modValue = 1.1;
 
+    // DON'T DELETE THIS COMMENT
         // adding 0.06 to this because i set the borderScaler to 0.95 in createGraphicsForSingleImage(). This resolves the issue we were having with the thin line around each of the modules.
-    float scale = mod(manualScale, modValue) + 0.06;
+    // float scale = mod(manualScale, modValue) + 0.06;
+    float scale = mod(manualScale, modValue);
 
     if(numBTexes == 1) {
         if(sD == 1) {
@@ -67,7 +69,6 @@ void main() {
             scale = mod(vTime, modValue);
         }
         if(brightness < clipDarkOutliers || brightness > 1.0 - clipLightOutliers) {
-            //this is sometimes going off when it shouldn't on during page reload and maybe on page resize too.
             scale = 0.25;
         }
     } else if(numBTexes > 1) {
@@ -78,18 +79,11 @@ void main() {
         }
     }
 
-    // scale = 0.5;
-
     mat3 mvp = uProjectionMatrix * uWorldTransformMatrix * uTransformMatrix;
-
-    // gl_Position = vec4((mvp * vec3(aPosition * (scale) + aPositionOffset, 1.0)).xy, 0.0, 1.0);
-    // aPosition seems to be the position of the first four vertexes.
-    // aPositionOffset seems to 
 
     vec2 d = (vCellW * 0.5) + (aPosition * scale + (aPositionOffset - (vCellW * 0.5 * scale)));
 
     gl_Position = vec4((mvp * vec3(d, 1.0)).xy, 0.0, 1.0);
-    // gl_Position = vec4(0.25, 0.85, 0.0, 1.0);
 
     vUV = aUV;
     vIndex = aIndex;

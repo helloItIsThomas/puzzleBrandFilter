@@ -194,7 +194,8 @@ const colorController = general.add(sv, "color", false).name("Color");
 
 const manualScaleController = general
   // .add(sv, "manualScale", 0.0, 0.99, 0.01)
-  .add(sv, "manualScale", 0.0, 1.0, 0.01)
+  .add(sv, "manualScale", 0.0, 1.05, 0.01)
+  // .add(sv, "manualScale", 0.0, 1.06, 0.01)
   .name("Manual Scale");
 
 // const noiseController = general
@@ -229,7 +230,7 @@ speedController.onChange((value) => {
 manualScaleController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.manualScale = Math.min(
     value,
-    1.0
+    1.05
     // 0.9999999
   );
 });

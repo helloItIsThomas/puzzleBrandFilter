@@ -2,17 +2,16 @@ import { downloadCanvas } from "../utils/utils.js";
 import { sv } from "../utils/variables.js";
 
 const cDiamMult = 0.5;
-const scaleAmount = 1.0;
 
 export function createGraphicsForSingleImage() {
   // create a 5x4 texture atlas, or sprite sheet.
   const atlasColCount = 5;
   const atlasRowCount = 4;
 
+  // DON'T CHANGE borderScaler WITHOUT REFERRING TO THE COMMENT IN THE VERT SHADER
   const borderScaler = 0.95;
-  // DEBUGGING HERE //
-  const iconW = sv.cellW; //sv.singleImgIcons[0].width;
-  const iconH = sv.cellH; //sv.singleImgIcons[0].height;
+  const iconW = sv.cellW;
+  const iconH = sv.cellH;
   const atlasW = iconW * atlasColCount;
   const atlasH = iconH * atlasRowCount;
 
@@ -88,8 +87,8 @@ export function createLeftCircle(size) {
   pg.ellipseMode(sv.p.CENTER);
   const circleDiameter = h * cDiamMult;
   pg.push();
-  pg.translate(0.0, h * 0.5 - circleDiameter * scaleAmount);
-  pg.scale(scaleAmount); // Scale down all elements
+  pg.translate(0.0, h * 0.5 - circleDiameter);
+  pg.scale(1.0); // Scale down all elements
   pg.translate(circleDiameter * 0.5, h / 2);
   pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
   pg.pop();
@@ -118,8 +117,8 @@ export function createRightCircle(size) {
   const circleDiameter = h * cDiamMult; // Adjust the scale as needed
 
   pg.push();
-  pg.translate(0.0, h * 0.5 - circleDiameter * scaleAmount);
-  pg.scale(scaleAmount); // Scale down all elements
+  pg.translate(0.0, h * 0.5 - circleDiameter);
+  pg.scale(1.0); // Scale down all elements
   pg.translate(w * 0.5 - circleDiameter * 0.5, h / 2);
   pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
   pg.pop();
@@ -127,8 +126,6 @@ export function createRightCircle(size) {
 }
 
 export function createCenterGraphic(size) {
-  // const scaleAmount = 0.95;
-
   // Define quad dimensions
   const width = size * 2;
   const height = size;
@@ -141,7 +138,6 @@ export function createCenterGraphic(size) {
   const pg = sv.p.createGraphics(width, height);
   sv.createCenterGraphic = pg;
 
-  // const cDiameter = height * cDiamMult * scaleAmount;
   const cDiameter = height * cDiamMult;
   pg.pixelDensity(2);
   pg.fill(sv.fillColor);
@@ -152,8 +148,8 @@ export function createCenterGraphic(size) {
   const borderOffset = 0.0;
 
   pg.push();
-  pg.translate(0.0, height * 0.5 - cDiameter * scaleAmount);
-  pg.scale(scaleAmount); // Scale down all elements
+  pg.translate(0.0, height * 0.5 - cDiameter);
+  pg.scale(1.0);
   // Draw quad with padding
   pg.beginShape();
   pg.vertex(borderOffset, borderOffset);
