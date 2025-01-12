@@ -15,6 +15,8 @@ uniform float time;
 uniform float gridResolution;
 uniform float rowCount;
 uniform float colCount;
+uniform float cellW;
+uniform float cellH;
 uniform float hgAR;
 uniform float lcAR;
 uniform float rcAR;
@@ -50,15 +52,12 @@ void main() {
     float totalCells = rowCount * colCount;
     float indexFloat = vIndex * totalCells; // Scale normalized index to total cells
 
-    // Calculate x and y based on indexFloat
-    // float x = mod(indexFloat, gridResolution) / gridResolution;
-    // float y = floor(indexFloat / gridResolution) / gridResolution;
     float x = mod(indexFloat, colCount) / colCount;
     float y = floor(indexFloat / colCount) / rowCount;
     vec2 bTexUV = vec2(x, y);
     vec4 bTexColor = texture2D(bTex1, bTexUV);
-    float noise = texture2D(noiseTex, bTexUV).r * noiseLevel;
 
+    float noise = texture2D(noiseTex, bTexUV).r * noiseLevel;
     // float sharp = 10.0;
     float sharp = 2.0;
     float backForthClock = sin(time + noise);

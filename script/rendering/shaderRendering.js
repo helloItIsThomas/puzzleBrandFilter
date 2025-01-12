@@ -129,6 +129,7 @@ export async function shaderRendering() {
   bTexes = sv.stills.map((still) => {
     let src = new ImageSource({ resource: still.brightnessTex });
     let tex = new Texture({ source: src });
+
     return tex;
   });
 
@@ -207,6 +208,8 @@ function createResources(noiseCanvas) {
       vTlThresh3: { value: sv.tlThresh3, type: "f32" },
       vCellW: { value: sv.cellW, type: "f32" },
       vCellH: { value: sv.cellH, type: "f32" },
+      cellW: { value: sv.cellW, type: "f32" },
+      cellH: { value: sv.cellH, type: "f32" },
       // manualScale: { value: 0.999, type: "f32" },
       manualScale: { value: 1.05, type: "f32" },
       gridResolution: { value: sv.gridResolution, type: "f32" },
@@ -225,8 +228,6 @@ function createResources(noiseCanvas) {
       vNoisyMax: { value: sv.noisyMax, type: "f32" },
     },
   };
-  console.log("noisyMin: ", sv.noisyMin);
-  console.log("noisyMax: ", sv.noisyMax);
 
   const graphics = sv.oneActiveImage
     ? [sv.iconAtlas.canvas]
