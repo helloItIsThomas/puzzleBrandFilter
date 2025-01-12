@@ -42,7 +42,8 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
     img = fitImageToWindow(img, resizeTo);
 
     const processed = img.get();
-    processed.filter(sv.p.GRAY);
+    // turning off this filter for the moment so it isnt greyscale
+    // processed.filter(sv.p.GRAY);
     return processed;
   });
 

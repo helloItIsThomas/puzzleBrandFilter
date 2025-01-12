@@ -63,12 +63,12 @@ export async function shaderRendering() {
   // Create a new buffer for unique IDs
   const instanceIndexBuffer = new Buffer({
     data: new Float32Array(
-      [...Array(sv.totalTriangles).keys()].map(
-        (i) => i / (sv.totalTriangles - 1)
-      )
+      [...Array(sv.totalTriangles).keys()].map((i) => i / sv.totalTriangles)
     ),
     usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
   });
+
+  console.log("instanceIndexBuffer: ", instanceIndexBuffer.data);
 
   const geometry = new Geometry({
     topology: "triangle-strip",
@@ -195,6 +195,10 @@ function createResources(noiseCanvas) {
   // Common properties for both modes
   let noiseSrc = new ImageSource({ resource: noiseCanvas.canvas });
   let noiseTex = new Texture({ source: noiseSrc });
+
+  console.log("row count: ", sv.rowCount);
+  console.log("col count: ", sv.colCount);
+
   const commonResources = {
     noiseTex: noiseTex.source,
     waveUniforms: {
