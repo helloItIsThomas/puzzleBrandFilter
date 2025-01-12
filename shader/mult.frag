@@ -101,7 +101,8 @@ void main() {
     if(brightness > point1 && brightness <= point2) {
         hgUV_x = (brightness - point1) / (point2 - point1) * 0.5;
     } else if(brightness > point2) {
-        hgUV_x = 0.5;
+        // hgUV_x = 0.5;
+        hgUV_x = 0.55;
     } else {
         hgUV_x = 0.0;
     }
@@ -130,6 +131,6 @@ void main() {
     vec4 rightCircle = texture2D(rightCircleTex, rcUV);
 
     // gl_FragColor = rightCircle + leftCircle;
-    gl_FragColor = hourglass;
-    // gl_FragColor = hourglass + rightCircle + leftCircle;
+    // gl_FragColor = hourglass;
+    gl_FragColor = hourglass + rightCircle + leftCircle;
 }
