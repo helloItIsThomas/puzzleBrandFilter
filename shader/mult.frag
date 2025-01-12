@@ -60,7 +60,7 @@ void main() {
     float noise = texture2D(noiseTex, bTexUV).r * noiseLevel;
 
     // float sharp = 10.0;
-    float sharp = 5.0;
+    float sharp = 2.0;
     float backForthClock = sin(time + noise);
     backForthClock = atan(sharp * backForthClock) / atan(sharp);
     backForthClock = map(backForthClock, -1.0, 1.0, 0.0, 1.05);
@@ -129,5 +129,7 @@ void main() {
     vec4 leftCircle = texture2D(leftCircleTex, lcUV);
     vec4 rightCircle = texture2D(rightCircleTex, rcUV);
 
-    gl_FragColor = hourglass + rightCircle + leftCircle;
+    // gl_FragColor = rightCircle + leftCircle;
+    gl_FragColor = hourglass;
+    // gl_FragColor = hourglass + rightCircle + leftCircle;
 }

@@ -82,7 +82,7 @@ export function createLeftCircle(size) {
   pg.fill(sv.fillColor);
   pg.noStroke();
   // pg.stroke(255, 0, 0);
-  pg.background(0, 255, 0);
+  // pg.background(255, 255, 255);
   pg.clear();
   pg.ellipseMode(sv.p.CENTER);
   const circleDiameter = h * cDiamMult;
@@ -126,6 +126,7 @@ export function createRightCircle(size) {
 }
 
 export function createCenterGraphic(size) {
+  size *= 2.0;
   // Define quad dimensions
   const width = size * 2;
   const height = size;
