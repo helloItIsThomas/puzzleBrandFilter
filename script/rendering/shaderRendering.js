@@ -68,8 +68,6 @@ export async function shaderRendering() {
     usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
   });
 
-  console.log("instanceIndexBuffer: ", instanceIndexBuffer.data);
-
   const geometry = new Geometry({
     topology: "triangle-strip",
     instanceCount: sv.totalTriangles,

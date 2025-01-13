@@ -1,5 +1,6 @@
 import { sv } from "../utils/variables.js";
 import { downloadCanvas } from "../utils/utils.js";
+import { getAveColor } from "../imgProcessing/getAveColor.js";
 
 export class Still {
   constructor() {
@@ -49,8 +50,56 @@ export class Still {
         canvas.height = originalH;
         const ctx = canvas.getContext("2d");
         ctx.drawImage(tempCanvas, 0, 0);
-        this.brightnessTex = canvas;
         this.cells = result.cells;
+        // lets implement a function that expects a canvas and returns the average color for the canvas.
+        const cellWidth = canvas.width / sv.colCount;
+        const cellHeight = canvas.height / sv.rowCount;
+
+        let aveColorData = [];
+
+        for (let row = 0; row < sv.rowCount; row++) {
+          for (let col = 0; col < sv.colCount; col++) {
+            const x = col * cellWidth;
+            const y = row * cellHeight;
+
+            const cellCanvas = document.createElement("canvas");
+            cellCanvas.width = cellWidth;
+            cellCanvas.height = cellHeight;
+            const ctx = cellCanvas.getContext("2d");
+
+            ctx.drawImage(
+              canvas,
+              x,
+              y,
+              cellWidth,
+              cellHeight,
+              0,
+              0,
+              cellWidth,
+              cellHeight
+            );
+            aveColorData.push(getAveColor(cellCanvas));
+          }
+        }
+        const aveColorCanvas = document.createElement("canvas");
+        aveColorCanvas.width = canvas.width;
+        aveColorCanvas.height = canvas.height;
+        const aveColorCtx = aveColorCanvas.getContext("2d");
+
+        for (let row = 0; row < sv.rowCount; row++) {
+          for (let col = 0; col < sv.colCount; col++) {
+            const aveColor = aveColorData[row * sv.colCount + col];
+            aveColorCtx.fillStyle = `rgb(${aveColor.brightness}, ${aveColor.brightness}, ${aveColor.brightness})`;
+            aveColorCtx.fillRect(
+              col * cellWidth,
+              row * cellHeight,
+              cellWidth,
+              cellHeight
+            );
+          }
+        }
+        // downloadCanvas(aveColorCanvas);
+        this.brightnessTex = aveColorCanvas;
         resolve();
       };
       worker.onerror = (e) => {

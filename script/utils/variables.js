@@ -129,8 +129,8 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolutionBuffer: "10",
-  gridResolution: "10",
+  gridResolutionBuffer: "2",
+  gridResolution: "2",
   noiseOffset: 1.0,
 
   tlThresh1: 0.15,

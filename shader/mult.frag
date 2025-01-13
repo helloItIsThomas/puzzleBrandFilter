@@ -46,9 +46,18 @@ vec2 adjustUV(vec2 uv, float aspectRatio) {
     return uv;
 }
 
+float aR0 = 0.0;
+float aG0 = 0.0;
+float aB0 = 0.0;
+
+float a0 = 0.0;
+float a1 = 0.0;
+float a2 = 0.0;
+float a3 = 0.0;
+
 void main() {
+    vec2 uv = vUV;
     float totalCells = rowCount * colCount;
-                // 4 = 2 * 2;
 
     // vIndex is a normalized float that is unique to each geometry instance.
     // 0.0*4, 0.33*4, 0.666*4, 1.0*4
@@ -71,10 +80,14 @@ void main() {
     // ••
     // (0, 0), (0.5, 0), (0, 0.5), (0.5, 0.5)
 
-    vec2 bTexUV = vec2(x + 0.01, y + 0.01);
+    float uvX = uv.x * (1.0 / colCount);
+    float uvY = uv.y * (1.0 / rowCount);
 
-    // vec4 bTexColor = texture2D(bTex1, vec2(0.53, 0.91));
+    vec2 bTexUV = vec2(x + uvX, y + uvY);
     vec4 bTexColor = texture2D(bTex1, bTexUV);
+    a0 += bTexColor.r;
+    a1 += bTexColor.g;
+    a2 += bTexColor.b;
 
     vec2 bTexUV2 = vec2(x, y);
     vec4 bTexColor2 = texture2D(bTex2, bTexUV2);
@@ -154,6 +167,7 @@ void main() {
     // gl_FragColor = hourglass;
     // gl_FragColor = hourglass + rightCircle + leftCircle;
     vec3 dc = bTexColor.rgb;
+    // vec3 dc = averageColor.rgb;
+    // gl_FragColor = vec4(uv.x, uv.y, 1.0, 1.0);
     gl_FragColor = vec4(dc.r, dc.g, dc.b, 1.0);
-    // gl_FragColor = vec4(dc, x, dc, 1.0);
 }
