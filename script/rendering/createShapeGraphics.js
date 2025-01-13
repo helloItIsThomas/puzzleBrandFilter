@@ -67,6 +67,9 @@ export function createGraphicsForMultipleImages() {
 }
 
 export function createLeftCircle(size) {
+  // maybe delete me
+  size *= 2.0;
+
   const w = size * 2;
   const h = size;
 
@@ -94,6 +97,9 @@ export function createLeftCircle(size) {
 }
 
 export function createRightCircle(size) {
+  // maybe delete me
+  size *= 2.0;
+
   const w = size * 2;
   const h = size;
 
@@ -124,6 +130,9 @@ export function createRightCircle(size) {
 }
 
 export function createCenterGraphic(size) {
+  // maybe delete me
+  size *= 2.0;
+
   // Define quad dimensions
   const width = size * 2;
   const height = size;

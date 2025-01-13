@@ -98,7 +98,6 @@ export class Still {
             );
           }
         }
-        // downloadCanvas(aveColorCanvas);
         this.brightnessTex = aveColorCanvas;
         resolve();
       };

@@ -103,9 +103,9 @@ void main() {
     backForthClock = map(backForthClock, -1.0, 1.0, 0.0, 1.05);
     float clock = backForthClock;
 
-    // vec4 mixedColor = mix(bTexColor, bTexColor2, clock);
+    vec4 mixedColor = mix(bTexColor, bTexColor2, clock);
     // t set to 1 for debug
-    vec4 mixedColor = mix(bTexColor, bTexColor2, 1.0);
+    // vec4 mixedColor = mix(bTexColor, bTexColor2, 1.0);
     float brightness = mixedColor.r;
 
     // ••••
@@ -165,9 +165,9 @@ void main() {
 
     // gl_FragColor = rightCircle + leftCircle;
     // gl_FragColor = hourglass;
-    // gl_FragColor = hourglass + rightCircle + leftCircle;
-    vec3 dc = bTexColor.rgb;
+    gl_FragColor = hourglass + rightCircle + leftCircle;
+    // vec3 dc = bTexColor.rgb;
     // vec3 dc = averageColor.rgb;
+    // gl_FragColor = vec4(dc.r, dc.g, dc.b, 1.0);
     // gl_FragColor = vec4(uv.x, uv.y, 1.0, 1.0);
-    gl_FragColor = vec4(dc.r, dc.g, dc.b, 1.0);
 }
