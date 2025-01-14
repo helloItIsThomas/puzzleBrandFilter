@@ -20,30 +20,15 @@ onmessage = function (e) {
   }
 
   const cellData = splitImageDataIntoCells(dta, dtaW, dtaH, rowCount, colCount);
-  console.log(cellData);
-  let aveColorData = [];
-  // for (const cell of cellData) {
-  // const imageDataObject = new ImageData(
-  // new Uint8ClampedArray(cell.data),
-  // cell.width,
-  // cell.height
-  // );
-  // const canvas = document.createElement("canvas");
-  // canvas.width = width;
-  // canvas.height = height;
-  // const context = canvas.getContext("2d");
-  // context.putImageData(imageData, 0, 0);
-  // downloadCanvas(canvas, "cellData.png");
-  // const aveColor = getAveColor(cell);
-  // aveColorData.push(aveColor);
-  // }
 
-  const imageData = dta.data;
-  // const cellData = [];
+  let aveColorData = [];
+  for (const cell of cellData) {
+    const aveColor = getAveColor(cell);
+    aveColorData.push(aveColor);
+  }
 
   const result = {
     cells,
-    imageData,
     aveColorData,
     cellData,
   };
@@ -53,22 +38,31 @@ onmessage = function (e) {
   // • • • //
 
   function getAveColor(imageData) {
+    // console.log(imageData);
     const data = imageData.data;
-    let r = 0,
-      g = 0,
-      b = 0;
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    let a = 0;
     let pixelCount = 0;
     for (let i = 0; i < data.length; i += 4) {
-      r += data[i];
-      g += data[i + 1];
-      b += data[i + 2];
+      const rD = data[i] || 0;
+      const gD = data[i + 1] || 0;
+      const bD = data[i + 2] || 0;
+      const aD = data[i + 3] || 0;
+      r += rD;
+      g += gD;
+      b += bD;
+      a += aD;
       pixelCount++;
     }
     const aR = Math.round(r / pixelCount);
     const aG = Math.round(g / pixelCount);
     const aB = Math.round(b / pixelCount);
-    const aA = 1.0;
+    const aA = Math.round(a / pixelCount);
     const aBright = Math.round((r + g + b) / (pixelCount * 3));
+
+    // console.log(aR, aG, aB, aA, aBright);
 
     return {
       red: aR,

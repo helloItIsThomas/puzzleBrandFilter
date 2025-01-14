@@ -39,42 +39,20 @@ export class Still {
 
       // image data here is the data of a source image
       const imageData = tempContext.getImageData(0, 0, originalW, originalH);
+      // imageData here is accurate
+
       const dta = imageData.data;
-      const dtaW = imageData.width;
-      const dtaH = imageData.height;
+      const dtaW = originalW;
+      const dtaH = originalH;
+
       worker.postMessage({ dta, dtaW, dtaH, rowCount, colCount, cellW, cellH });
 
       worker.onmessage = (e) => {
         const result = e.data;
-        const cellDatas = result.cellData;
-        for (const cell of cellDatas) {
-          const imageDataObject = new ImageData(
-            new Uint8ClampedArray(cell.data),
-            cell.width,
-            cell.height
-          );
-          const canvas = document.createElement("canvas");
-          canvas.width = originalW;
-          canvas.height = originalH;
-          const context = canvas.getContext("2d");
-          context.putImageData(imageDataObject, 0, 0);
-          downloadCanvas(canvas, "cellData.png");
-          // const aveColor = getAveColor(cell);
-          // aveColorData.push(aveColor);
-        }
-
-        const cellData = cellDatas[0];
-        const canvas = document.createElement("canvas");
-        canvas.width = originalW;
-        canvas.height = originalH;
-        const context = canvas.getContext("2d");
-        // console.log(result.cellData);
-        // context.putImageData(result.cellData, 0, 0);
-        // downloadCanvas(canvas, "cellData.png");
-
         this.cells = result.cells;
         const aveColorData = result.aveColorData;
-        // console.log(aveColorData);
+        console.log("aveColorData: ", aveColorData);
+
         // here we are populating this.brightnessTex with the colors stored in aveColorData.
         const aveColorCanvas = document.createElement("canvas");
         aveColorCanvas.width = originalW;
@@ -83,12 +61,12 @@ export class Still {
         for (let row = 0; row < sv.rowCount; row++) {
           for (let col = 0; col < sv.colCount; col++) {
             // THIS IS COMMENTED OUT FOR DEBUGGING REASONS
-            // const aveColor = aveColorData[row * sv.colCount + col];
-            // const aveColor = aveColorData[0];
-            // aveColorCtx.fillStyle = `rgb(${aveColor.brightness}, ${aveColor.brightness}, ${aveColor.brightness})`;
-            // aveColorCtx.fillRect(col * cellW, row * cellH, cellW, cellH);
+            const aveColor = aveColorData[row * sv.colCount + col];
+            aveColorCtx.fillStyle = `rgba(${aveColor.red}, ${aveColor.green}, ${aveColor.blue}, ${aveColor.alpha})`;
+            aveColorCtx.fillRect(col * cellW, row * cellH, cellW, cellH);
           }
         }
+        downloadCanvas(aveColorCanvas, "aveColorCanvas.png");
         this.brightnessTex = aveColorCanvas;
         resolve();
       };

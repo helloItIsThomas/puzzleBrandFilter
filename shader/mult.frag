@@ -77,6 +77,10 @@ void main() {
         // vec4 testLerp = mix(bTexColor, bTexColor2, clock);
     vec4 testLerp = mix(bTexColor, bTexColor2, clock);
     float brightness = testLerp.r;
+    float r = testLerp.r;
+    float g = testLerp.g;
+    float b = testLerp.b;
+    float a = testLerp.a;
 
     // Apply offsets to the UV coordinates
     vec2 hgUV = vUV / vec2(hgAR, 1.0);
@@ -134,5 +138,6 @@ void main() {
     // gl_FragColor = rightCircle + leftCircle;
     // gl_FragColor = hourglass;
     // gl_FragColor = hourglass + rightCircle + leftCircle;
-    gl_FragColor = vec4(brightness, brightness, brightness, 1.0);
+    // gl_FragColor = vec4(brightness, brightness, brightness, 1.0);
+    gl_FragColor = vec4(r, g, b, 1.0);
 }
