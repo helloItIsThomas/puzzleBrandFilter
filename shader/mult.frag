@@ -15,8 +15,6 @@ uniform float time;
 uniform float gridResolution;
 uniform float rowCount;
 uniform float colCount;
-uniform float cellW;
-uniform float cellH;
 uniform float hgAR;
 uniform float lcAR;
 uniform float rcAR;
@@ -46,69 +44,39 @@ vec2 adjustUV(vec2 uv, float aspectRatio) {
     return uv;
 }
 
-float aR0 = 0.0;
-float aG0 = 0.0;
-float aB0 = 0.0;
-
-float a0 = 0.0;
-float a1 = 0.0;
-float a2 = 0.0;
-float a3 = 0.0;
-
 void main() {
-    vec2 uv = vUV;
+    // Convert normalized vIndex to an absolute index
+    // float totalCells = gridResolution * gridResolution;
     float totalCells = rowCount * colCount;
-
-    // vIndex is a normalized float that is unique to each geometry instance.
-    // 0.0*4, 0.33*4, 0.666*4, 1.0*4
-    // 0.0*4, 0.25*4, 0.5*4, 0.75*4
     float indexFloat = vIndex * totalCells; // Scale normalized index to total cells
-    // indexFloat = non-normalized geom instance index.
-    // 0, 1, 2, 3
 
+    // Calculate x and y based on indexFloat
+    // float x = mod(indexFloat, gridResolution) / gridResolution;
+    // float y = floor(indexFloat / gridResolution) / gridResolution;
     float x = mod(indexFloat, colCount) / colCount;
-    // 0%2=(0 / 2) = 0
-    // 1%2=(1 / 2) = 0.5
-    // 2%2=(0 / 2) = 0
-    // 3%2=(1 / 2) = 0.5
-    // find the normalized position of each cell's x position.
     float y = floor(indexFloat / colCount) / rowCount;
-    // floor(0/2) = 0/2 = 0
-    // floor(1/2) = 0/2 = 0
-    // floor(2/2) = 1/2 = 0.5
-    // floor(3/2) = 1/2 = 0.5
-    // ••
-    // (0, 0), (0.5, 0), (0, 0.5), (0.5, 0.5)
-
-    float uvX = uv.x * (1.0 / colCount);
-    float uvY = uv.y * (1.0 / rowCount);
-
-    vec2 bTexUV = vec2(x + uvX, y + uvY);
+    vec2 bTexUV = vec2(x, y);
     vec4 bTexColor = texture2D(bTex1, bTexUV);
-    a0 += bTexColor.r;
-    a1 += bTexColor.g;
-    a2 += bTexColor.b;
-
-    vec2 bTexUV2 = vec2(x, y);
-    vec4 bTexColor2 = texture2D(bTex2, bTexUV2);
-
-    // ••••
-    // ••••
-    // ••••
-
+    // float noise = texture2D(noiseTex, bTexUV).r * noiseLevel;
     float noise = texture2D(noiseTex, bTexUV).r * noiseLevel;
+
+    // float sharp = 10.0;
     float sharp = 2.0;
     float backForthClock = sin(time + noise);
     backForthClock = atan(sharp * backForthClock) / atan(sharp);
     backForthClock = map(backForthClock, -1.0, 1.0, 0.0, 1.05);
+    // float clock = mod(backForthClock, 1.0);
     float clock = backForthClock;
+    // float clock = mod(time, 1.1);
 
-    vec4 mixedColor = mix(bTexColor, bTexColor2, clock);
-    // t set to 1 for debug
-    // vec4 mixedColor = mix(bTexColor, bTexColor2, 1.0);
-    float brightness = mixedColor.r;
-
-    // ••••
+    // If using bTex2
+    // if(numBTexes == 2) {
+    vec2 bTexUV2 = vec2(x, y);
+    // bTexUV2 = adjustUV(bTexUV2, bTex2AR);
+    vec4 bTexColor2 = texture2D(bTex2, bTexUV2);
+        // vec4 testLerp = mix(bTexColor, bTexColor2, clock);
+    vec4 testLerp = mix(bTexColor, bTexColor2, clock);
+    float brightness = testLerp.r;
 
     // Apply offsets to the UV coordinates
     vec2 hgUV = vUV / vec2(hgAR, 1.0);
@@ -159,15 +127,12 @@ void main() {
     rcUV.x = rcUV.x - 0.125 + rcUV_x;
 
     // Sample each texture with its own offset
-    vec4 hourglass = texture2D(hourglassTex, hgUV);
-    vec4 leftCircle = texture2D(leftCircleTex, lcUV);
-    vec4 rightCircle = texture2D(rightCircleTex, rcUV);
+    // vec4 hourglass = texture2D(hourglassTex, hgUV);
+    // vec4 leftCircle = texture2D(leftCircleTex, lcUV);
+    // vec4 rightCircle = texture2D(rightCircleTex, rcUV);
 
     // gl_FragColor = rightCircle + leftCircle;
     // gl_FragColor = hourglass;
-    gl_FragColor = hourglass + rightCircle + leftCircle;
-    // vec3 dc = bTexColor.rgb;
-    // vec3 dc = averageColor.rgb;
-    // gl_FragColor = vec4(dc.r, dc.g, dc.b, 1.0);
-    // gl_FragColor = vec4(uv.x, uv.y, 1.0, 1.0);
+    // gl_FragColor = hourglass + rightCircle + leftCircle;
+    gl_FragColor = vec4(brightness, brightness, brightness, 1.0);
 }

@@ -93,7 +93,7 @@ export async function shaderRendering() {
     sv.noiseCanvasGraphic = undefined;
   }
 
-  const noiseCanvas = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
+  const noiseCanvas = sv.p.createGraphics(sv.colCount, sv.rowCount);
   sv.noiseCanvasGraphic = noiseCanvas;
 
   let n = 0;
@@ -193,6 +193,7 @@ function createResources(noiseCanvas) {
   // Common properties for both modes
   let noiseSrc = new ImageSource({ resource: noiseCanvas.canvas });
   let noiseTex = new Texture({ source: noiseSrc });
+  // downloadCanvas(noiseCanvas.canvas);
 
   console.log("row count: ", sv.rowCount);
   console.log("col count: ", sv.colCount);

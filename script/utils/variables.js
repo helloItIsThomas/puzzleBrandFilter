@@ -129,8 +129,8 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolutionBuffer: "50",
-  gridResolution: "50",
+  gridResolutionBuffer: "2",
+  gridResolution: "2",
   noiseOffset: 1.0,
 
   tlThresh1: 0.15,
@@ -144,7 +144,7 @@ export const sv = {
   testImages: null,
 
   isRecording: false,
-  recordDuration: 2,
+  recordDuration: 5,
   takeScreenshot: false,
   tempUploadFiles: [],
 
@@ -201,7 +201,7 @@ const manualScaleController = general
   .name("Manual Scale");
 
 const noiseController = general
-  .add(sv, "noiseOffset", 0, 1, 0.01)
+  .add(sv, "noiseOffset", 0, 5, 0.01)
   .name("Noise Offset");
 
 const threshController1 = general
@@ -237,6 +237,7 @@ noiseController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.vNoiseLevel = value;
 });
+
 threshController1.onChange((value) => {});
 threshController2.onChange((value) => {});
 threshController3.onChange((value) => {});

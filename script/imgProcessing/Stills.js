@@ -1,6 +1,6 @@
 import { sv } from "../utils/variables.js";
 import { downloadCanvas } from "../utils/utils.js";
-import { getAveColor } from "../imgProcessing/getAveColor.js";
+import { recreateImageFromData } from "../utils/recreateImgFromData.js";
 
 export class Still {
   constructor() {
@@ -32,70 +32,61 @@ export class Still {
         { type: "module" }
       );
 
-      const imageData = tempContext.getImageData(0, 0, originalW, originalH);
-
       const rowCount = sv.rowCount;
       const colCount = sv.colCount;
       const cellW = originalW / colCount;
       const cellH = originalH / rowCount;
 
-      worker.postMessage({ imageData, rowCount, colCount, cellW, cellH });
+      // image data here is the data of a source image
+      const imageData = tempContext.getImageData(0, 0, originalW, originalH);
+      const dta = imageData.data;
+      const dtaW = imageData.width;
+      const dtaH = imageData.height;
+      worker.postMessage({ dta, dtaW, dtaH, rowCount, colCount, cellW, cellH });
 
       worker.onmessage = (e) => {
         const result = e.data;
+        const cellDatas = result.cellData;
+        for (const cell of cellDatas) {
+          const imageDataObject = new ImageData(
+            new Uint8ClampedArray(cell.data),
+            cell.width,
+            cell.height
+          );
+          const canvas = document.createElement("canvas");
+          canvas.width = originalW;
+          canvas.height = originalH;
+          const context = canvas.getContext("2d");
+          context.putImageData(imageDataObject, 0, 0);
+          downloadCanvas(canvas, "cellData.png");
+          // const aveColor = getAveColor(cell);
+          // aveColorData.push(aveColor);
+        }
+
+        const cellData = cellDatas[0];
         const canvas = document.createElement("canvas");
         canvas.width = originalW;
         canvas.height = originalH;
-        canvas.width = originalW;
-        canvas.height = originalH;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(tempCanvas, 0, 0);
+        const context = canvas.getContext("2d");
+        // console.log(result.cellData);
+        // context.putImageData(result.cellData, 0, 0);
+        // downloadCanvas(canvas, "cellData.png");
+
         this.cells = result.cells;
-        // lets implement a function that expects a canvas and returns the average color for the canvas.
-        const cellWidth = canvas.width / sv.colCount;
-        const cellHeight = canvas.height / sv.rowCount;
-
-        let aveColorData = [];
-
-        for (let row = 0; row < sv.rowCount; row++) {
-          for (let col = 0; col < sv.colCount; col++) {
-            const x = col * cellWidth;
-            const y = row * cellHeight;
-
-            const cellCanvas = document.createElement("canvas");
-            cellCanvas.width = cellWidth;
-            cellCanvas.height = cellHeight;
-            const ctx = cellCanvas.getContext("2d");
-
-            ctx.drawImage(
-              canvas,
-              x,
-              y,
-              cellWidth,
-              cellHeight,
-              0,
-              0,
-              cellWidth,
-              cellHeight
-            );
-            aveColorData.push(getAveColor(cellCanvas));
-          }
-        }
+        const aveColorData = result.aveColorData;
+        // console.log(aveColorData);
+        // here we are populating this.brightnessTex with the colors stored in aveColorData.
         const aveColorCanvas = document.createElement("canvas");
-        aveColorCanvas.width = canvas.width;
-        aveColorCanvas.height = canvas.height;
+        aveColorCanvas.width = originalW;
+        aveColorCanvas.height = originalH;
         const aveColorCtx = aveColorCanvas.getContext("2d");
-
         for (let row = 0; row < sv.rowCount; row++) {
           for (let col = 0; col < sv.colCount; col++) {
-            const aveColor = aveColorData[row * sv.colCount + col];
-            aveColorCtx.fillStyle = `rgb(${aveColor.brightness}, ${aveColor.brightness}, ${aveColor.brightness})`;
-            aveColorCtx.fillRect(
-              col * cellWidth,
-              row * cellHeight,
-              cellWidth,
-              cellHeight
-            );
+            // THIS IS COMMENTED OUT FOR DEBUGGING REASONS
+            // const aveColor = aveColorData[row * sv.colCount + col];
+            // const aveColor = aveColorData[0];
+            // aveColorCtx.fillStyle = `rgb(${aveColor.brightness}, ${aveColor.brightness}, ${aveColor.brightness})`;
+            // aveColorCtx.fillRect(col * cellW, row * cellH, cellW, cellH);
           }
         }
         this.brightnessTex = aveColorCanvas;
