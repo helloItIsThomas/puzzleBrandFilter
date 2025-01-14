@@ -243,8 +243,6 @@ function createResources(noiseCanvas) {
     (canvas) => new Texture({ source: new ImageSource({ resource: canvas }) })
   );
 
-  // downloadCanvas(textures[0].source.resource);
-
   // Mode-specific textures
   const modeSpecificTextures =
     sv.oneActiveImage === true
