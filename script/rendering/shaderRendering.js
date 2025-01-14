@@ -131,7 +131,7 @@ export async function shaderRendering() {
     return tex;
   });
 
-  downloadCanvas(bTexes[0].source.resource);
+  // downloadCanvas(bTexes[0].source.resource);
 
   resources.waveUniforms.numBTexes = { value: bTexes.length, type: "i32" };
 
@@ -197,8 +197,8 @@ function createResources(noiseCanvas) {
   let noiseTex = new Texture({ source: noiseSrc });
   // downloadCanvas(noiseCanvas.canvas);
 
-  console.log("row count: ", sv.rowCount);
-  console.log("col count: ", sv.colCount);
+  // console.log("row count: ", sv.rowCount);
+  // console.log("col count: ", sv.colCount);
 
   const commonResources = {
     noiseTex: noiseTex.source,

@@ -52,14 +52,14 @@ export class Still {
         this.cells = result.cells;
         const aveColorData = result.aveColorData;
         const cellData = result.cellData;
-        console.log(
-          "cellW: ",
-          cellW,
-          "cellH: ",
-          cellH,
-          "cellW*cellH * 4: ",
-          cellW * cellH * 4
-        );
+        // console.log(
+        // "cellW: ",
+        // cellW,
+        // "cellH: ",
+        // cellH,
+        // "cellW*cellH * 4: ",
+        // cellW * cellH * 4
+        // );
         // lets see if we can reconstruct the top corner of the image.
         // we should have an array of all rgba values of all pixels of the top left cell.
         const topLeftCornerRGBAData = cellData[0];
@@ -71,17 +71,21 @@ export class Still {
           const alpha = topLeftCornerRGBAData[i + 3];
           pixelColors.push({ red, green, blue, alpha });
         }
-        console.log("—: ", cellData[0].length);
-        console.log("pixelColors: ", pixelColors);
+        // console.log("—: ", cellData[0].length);
+        // console.log("pixelColors: ", pixelColors);
         const testCanvas = document.createElement("canvas");
         testCanvas.width = cellW;
         testCanvas.height = cellH;
         const testCtx = testCanvas.getContext("2d");
+        // when gridResolution = 1,
+        // this works well.
+        // when it is 2,
+        // there are gaps between every row. Why?
         for (let y = 0; y < cellH; y++) {
           for (let x = 0; x < cellW; x++) {
             const pixelColor = pixelColors[y * cellW + x];
             if (pixelColor != undefined) {
-              console.log("pixelColor: ", pixelColor);
+              // console.log("pixelColor: ", pixelColor);
               testCtx.fillStyle = `rgba(${pixelColor.red}, ${pixelColor.green}, ${pixelColor.blue}, ${pixelColor.alpha})`;
               testCtx.fillRect(x, y, 1, 1);
             }
