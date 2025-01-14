@@ -99,6 +99,7 @@ export class Still {
           }
         }
         this.brightnessTex = aveColorCanvas;
+        // downloadCanvas(aveColorCanvas);
         resolve();
       };
       worker.onerror = (e) => {
