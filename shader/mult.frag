@@ -83,7 +83,7 @@ void main() {
     float uvX = uv.x * (1.0 / colCount);
     float uvY = uv.y * (1.0 / rowCount);
 
-    vec2 bTexUV = vec2(x + uvX, y + uvY);
+    vec2 bTexUV = vec2(x, y);
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     a0 += bTexColor.r;
     a1 += bTexColor.g;
@@ -98,7 +98,8 @@ void main() {
 
     float noise = texture2D(noiseTex, bTexUV).r * noiseLevel;
     float sharp = 2.0;
-    float backForthClock = sin(time + noise);
+    // float backForthClock = sin(time + noise);
+    float backForthClock = sin(time);
     backForthClock = atan(sharp * backForthClock) / atan(sharp);
     backForthClock = map(backForthClock, -1.0, 1.0, 0.0, 1.05);
     float clock = backForthClock;
