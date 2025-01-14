@@ -131,13 +131,13 @@ void main() {
     rcUV.x = rcUV.x - 0.125 + rcUV_x;
 
     // Sample each texture with its own offset
-    // vec4 hourglass = texture2D(hourglassTex, hgUV);
-    // vec4 leftCircle = texture2D(leftCircleTex, lcUV);
-    // vec4 rightCircle = texture2D(rightCircleTex, rcUV);
+    vec4 hourglass = texture2D(hourglassTex, hgUV);
+    vec4 leftCircle = texture2D(leftCircleTex, lcUV);
+    vec4 rightCircle = texture2D(rightCircleTex, rcUV);
 
     // gl_FragColor = rightCircle + leftCircle;
     // gl_FragColor = hourglass;
     // gl_FragColor = hourglass + rightCircle + leftCircle;
     // gl_FragColor = vec4(brightness, brightness, brightness, 1.0);
-    gl_FragColor = vec4(r, g, b, 1.0);
+    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }

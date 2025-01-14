@@ -131,6 +131,8 @@ export async function shaderRendering() {
     return tex;
   });
 
+  downloadCanvas(bTexes[0].source.resource);
+
   resources.waveUniforms.numBTexes = { value: bTexes.length, type: "i32" };
 
   if (bTexes.length == 1) {
