@@ -193,9 +193,6 @@ function createResources(noiseCanvas) {
   let noiseSrc = new ImageSource({ resource: noiseCanvas.canvas });
   let noiseTex = new Texture({ source: noiseSrc });
 
-  console.log("row count: ", sv.rowCount);
-  console.log("col count: ", sv.colCount);
-
   const commonResources = {
     noiseTex: noiseTex.source,
     waveUniforms: {
