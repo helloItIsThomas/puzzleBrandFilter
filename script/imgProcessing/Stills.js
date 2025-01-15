@@ -18,13 +18,17 @@ export class Still {
     // const originalW = sv.gridW;
     // const originalH = sv.gridH;
     // temp debug activity OVER //
+    // image.canvas.width = originalW;
+    // image.canvas.height = originalH;
+    // downloadCanvas(image.canvas);
+    const thisCtx = image.canvas.getContext("2d");
 
     // Create a temporary canvas to make sure the image is in native format.
-    const tempCanvas = document.createElement("canvas");
-    tempCanvas.width = originalW;
-    tempCanvas.height = originalH;
-    const tempContext = tempCanvas.getContext("2d");
-    tempContext.drawImage(image.canvas, 0, 0, originalW, originalH);
+    // const tempCanvas = document.createElement("canvas");
+    // tempCanvas.width = originalW;
+    // tempCanvas.height = originalH;
+    // const tempContext = tempCanvas.getContext("2d");
+    // tempContext.drawImage(image.canvas, 0, 0, originalW, originalH);
 
     return new Promise((resolve, reject) => {
       const worker = new Worker(
@@ -32,7 +36,7 @@ export class Still {
         { type: "module" }
       );
 
-      const imageData = tempContext.getImageData(0, 0, originalW, originalH);
+      const imageData = thisCtx.getImageData(0, 0, originalW, originalH);
 
       const rowCount = sv.rowCount;
       const colCount = sv.colCount;
@@ -43,17 +47,20 @@ export class Still {
 
       worker.onmessage = (e) => {
         const result = e.data;
-        const canvas = document.createElement("canvas");
-        canvas.width = originalW;
-        canvas.height = originalH;
-        canvas.width = originalW;
-        canvas.height = originalH;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(tempCanvas, 0, 0);
+
+        console.log(image.canvas);
+        // downloadCanvas(image.canvas);
+        // const canvas = document.createElement("canvas");
+        // canvas.width = originalW;
+        // canvas.height = originalH;
+        // canvas.width = originalW;
+        // canvas.height = originalH;
+        // const ctx = canvas.getContext("2d");
+        // ctx.drawImage(tempCanvas, 0, 0);
         this.cells = result.cells;
         // lets implement a function that expects a canvas and returns the average color for the canvas.
-        const cellWidth = canvas.width / sv.colCount;
-        const cellHeight = canvas.height / sv.rowCount;
+        const cellWidth = sv.cellW; //canvas.width / sv.colCount;
+        const cellHeight = sv.cellH; //canvas.height / sv.rowCount;
 
         let aveColorData = [];
 
@@ -68,7 +75,7 @@ export class Still {
             const ctx = cellCanvas.getContext("2d");
 
             ctx.drawImage(
-              canvas,
+              image.canvas,
               x,
               y,
               cellWidth,
@@ -79,11 +86,18 @@ export class Still {
               cellHeight
             );
             aveColorData.push(getAveColor(cellCanvas));
+            // aveColorData.push({
+            // red: 255,
+            // green: 50,
+            // blue: 0,
+            // alpha: 255,
+            // brightness: 255,
+            // });
           }
         }
         const aveColorCanvas = document.createElement("canvas");
-        aveColorCanvas.width = canvas.width;
-        aveColorCanvas.height = canvas.height;
+        aveColorCanvas.width = originalW; //canvas.width;
+        aveColorCanvas.height = originalH; //canvas.height;
         const aveColorCtx = aveColorCanvas.getContext("2d");
 
         for (let row = 0; row < sv.rowCount; row++) {
