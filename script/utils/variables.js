@@ -129,10 +129,10 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolutionBuffer: "5",
-  gridResolution: "5",
+  gridResolutionBuffer: "20",
+  gridResolution: "20",
   noiseOffset: 1.0,
-
+  snappiness: 10.0,
   tlThresh1: 0.15,
   tlThresh1BUFFER: 0.01,
   tlThresh2: 0.25,
@@ -144,7 +144,7 @@ export const sv = {
   testImages: null,
 
   isRecording: false,
-  recordDuration: 2,
+  recordDuration: 5,
   takeScreenshot: false,
   tempUploadFiles: [],
 
@@ -204,6 +204,10 @@ const noiseController = general
   .add(sv, "noiseOffset", 0, 1, 0.01)
   .name("Noise Offset");
 
+const snappinessController = general
+  .add(sv, "snappiness", 1.0, 20.0, 1.0)
+  .name("Snappiness");
+
 const threshController1 = general
   .add(sv, "tlThresh1", 0.0, 1.0)
   .name("tlThresh1");
@@ -237,6 +241,11 @@ noiseController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.vNoiseLevel = value;
 });
+
+snappinessController.onChange((value) => {
+  sv.triangleMesh.shader.resources.waveUniforms.uniforms.snappiness = value;
+});
+
 threshController1.onChange((value) => {});
 threshController2.onChange((value) => {});
 threshController3.onChange((value) => {});

@@ -10,6 +10,7 @@ uniform sampler2D noiseTex;
 uniform sampler2D bTex1;
 uniform sampler2D bTex2;
 uniform float noiseLevel;
+uniform float snappiness;
 
 uniform float time;
 uniform float gridResolution;
@@ -96,10 +97,10 @@ void main() {
     // ••••
     // ••••
 
-    float noise = texture2D(noiseTex, bTexUV).r * noiseLevel;
-    float sharp = 2.0;
+    float noise = texture2D(noiseTex, bTexUV).r * noiseLevel * 5.0;
+    float sharp = snappiness;
     // float backForthClock = sin(time + noise);
-    float backForthClock = sin(time);
+    float backForthClock = sin(time + noise);
     backForthClock = atan(sharp * backForthClock) / atan(sharp);
     backForthClock = map(backForthClock, -1.0, 1.0, 0.0, 1.05);
     float clock = backForthClock;

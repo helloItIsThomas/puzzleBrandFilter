@@ -93,7 +93,7 @@ export async function shaderRendering() {
     sv.noiseCanvasGraphic = undefined;
   }
 
-  const noiseCanvas = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
+  const noiseCanvas = sv.p.createGraphics(sv.colCount, sv.rowCount);
   sv.noiseCanvasGraphic = noiseCanvas;
 
   let n = 0;
@@ -224,6 +224,7 @@ function createResources(noiseCanvas) {
       cO: { value: sv.params.coU, type: "i32" },
       clipDarkOutliers: { value: 0.0, type: "f32" },
       clipLightOutliers: { value: 0.0, type: "f32" },
+      snappiness: { value: sv.snappiness, type: "f32" },
       noiseLevel: { value: sv.noiseOffset, type: "f32" },
       vNoiseLevel: { value: sv.noiseOffset, type: "f32" },
       vNoisyMin: { value: sv.noisyMin, type: "f32" },

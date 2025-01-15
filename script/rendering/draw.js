@@ -4,8 +4,6 @@ export function draw() {
   if (sv.triangleMesh && sv.workerDone) {
     const uniforms = sv.triangleMesh.shader.resources.waveUniforms.uniforms;
 
-    // uniforms.noiseLevel = sv.noiseOffset;
-
     uniforms.tlThresh1 = sv.tlThresh1;
     uniforms.tlThresh2 = sv.tlThresh2;
     uniforms.tlThresh3 = sv.tlThresh3;
