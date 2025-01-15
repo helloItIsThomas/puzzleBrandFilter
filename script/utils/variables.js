@@ -129,6 +129,7 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
+  gridResolutionMax: 200,
   gridResolutionBuffer: "20",
   gridResolution: "20",
   noiseOffset: 1.0,
@@ -256,9 +257,15 @@ inputField.addEventListener("keydown", async (event) => {
   if (value !== sv.gridResolution) {
     if (event.key === "Enter") {
       if (sv.workerDone) {
-        if (value < 400) sv.gridResolution = value;
-        else sv.gridResolution = 400;
-        if (value == 0) sv.gridResolution = 1;
+        if (value < sv.gridResolutionMax) sv.gridResolution = value;
+        else {
+          gridResController.setValue(sv.gridResolutionMax);
+          sv.gridResolution = sv.gridResolutionMax;
+        }
+        if (value == 0) {
+          gridResController.setValue(1);
+          sv.gridResolution = 1;
+        }
         const passMeImgs = await recalculateGrid();
         await updateSvgIcons();
         await updateCellData(passMeImgs);

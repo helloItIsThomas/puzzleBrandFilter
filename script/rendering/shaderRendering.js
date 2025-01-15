@@ -100,7 +100,6 @@ export async function shaderRendering() {
   sv.noisyValues = [];
   for (let y = 0; y < sv.rowCount; y++) {
     for (let x = 0; x < sv.colCount; x++) {
-      // const noisyValue = sv.p.noise(n * sv.p.noise(n / sv.gridResolution));
       const noisyValue = sv.p.noise(n);
       sv.noisyValues.push(noisyValue);
       sv.noisyMax = sv.p.max(sv.noisyMax, noisyValue);
