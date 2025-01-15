@@ -1,7 +1,6 @@
-export function getAveColor(canvas) {
-  console.log("getAveColor");
-  const ctx = canvas.getContext("2d");
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+export function getAveColor(imageData) {
+  // const ctx = canvas.getContext("2d");
+  // const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const data = imageData.data;
   let r = 0,
     g = 0,

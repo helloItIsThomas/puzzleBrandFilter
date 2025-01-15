@@ -14,21 +14,7 @@ export class Still {
     const originalW = image.width;
     const originalH = image.height;
 
-    // temp debug activity //
-    // const originalW = sv.gridW;
-    // const originalH = sv.gridH;
-    // temp debug activity OVER //
-    // image.canvas.width = originalW;
-    // image.canvas.height = originalH;
-    // downloadCanvas(image.canvas);
     const thisCtx = image.canvas.getContext("2d");
-
-    // Create a temporary canvas to make sure the image is in native format.
-    // const tempCanvas = document.createElement("canvas");
-    // tempCanvas.width = originalW;
-    // tempCanvas.height = originalH;
-    // const tempContext = tempCanvas.getContext("2d");
-    // tempContext.drawImage(image.canvas, 0, 0, originalW, originalH);
 
     return new Promise((resolve, reject) => {
       const worker = new Worker(
@@ -48,17 +34,7 @@ export class Still {
       worker.onmessage = (e) => {
         const result = e.data;
 
-        console.log(image.canvas);
-        // downloadCanvas(image.canvas);
-        // const canvas = document.createElement("canvas");
-        // canvas.width = originalW;
-        // canvas.height = originalH;
-        // canvas.width = originalW;
-        // canvas.height = originalH;
-        // const ctx = canvas.getContext("2d");
-        // ctx.drawImage(tempCanvas, 0, 0);
         this.cells = result.cells;
-        // lets implement a function that expects a canvas and returns the average color for the canvas.
         const cellWidth = sv.cellW; //canvas.width / sv.colCount;
         const cellHeight = sv.cellH; //canvas.height / sv.rowCount;
 
@@ -69,30 +45,9 @@ export class Still {
             const x = col * cellWidth;
             const y = row * cellHeight;
 
-            const cellCanvas = document.createElement("canvas");
-            cellCanvas.width = cellWidth;
-            cellCanvas.height = cellHeight;
-            const ctx = cellCanvas.getContext("2d");
-
-            ctx.drawImage(
-              image.canvas,
-              x,
-              y,
-              cellWidth,
-              cellHeight,
-              0,
-              0,
-              cellWidth,
-              cellHeight
-            );
-            aveColorData.push(getAveColor(cellCanvas));
-            // aveColorData.push({
-            // red: 255,
-            // green: 50,
-            // blue: 0,
-            // alpha: 255,
-            // brightness: 255,
-            // });
+            const imageData = thisCtx.getImageData(x, y, cellWidth, cellHeight);
+            const thisAveColor = getAveColor(imageData);
+            aveColorData.push(thisAveColor);
           }
         }
         const aveColorCanvas = document.createElement("canvas");
@@ -113,7 +68,7 @@ export class Still {
           }
         }
         this.brightnessTex = aveColorCanvas;
-        // downloadCanvas(aveColorCanvas);
+        downloadCanvas(aveColorCanvas);
         resolve();
       };
       worker.onerror = (e) => {
