@@ -14,7 +14,13 @@ export class Still {
     const originalW = image.width;
     const originalH = image.height;
 
-    const thisCtx = image.canvas.getContext("2d");
+    // const thisCtx = image.canvas.getContext("2d");
+
+    const thisCanvas = document.createElement("canvas");
+    thisCanvas.width = originalW;
+    thisCanvas.height = originalH;
+    const thisCtx = thisCanvas.getContext("2d");
+    thisCtx.drawImage(image.canvas, 0, 0, originalW, originalH);
 
     return new Promise((resolve, reject) => {
       const worker = new Worker(
