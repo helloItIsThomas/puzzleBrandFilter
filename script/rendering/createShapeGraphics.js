@@ -9,7 +9,7 @@ export function createGraphicsForSingleImage() {
   const atlasRowCount = 4;
 
   // DON'T CHANGE borderScaler WITHOUT REFERRING TO THE COMMENT IN THE VERT SHADER
-  const borderScaler = 0.95;
+  const borderScaler = 0.9;
   const iconW = sv.cellW;
   const iconH = sv.cellH;
   const atlasW = iconW * atlasColCount;

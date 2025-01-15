@@ -67,7 +67,8 @@ void main() {
     // ( though it is a bit out of date now )
         // adding 0.06 to this because i set the borderScaler to 0.95 in createGraphicsForSingleImage(). This resolves the issue we were having with the thin line around each of the modules.
     // float scale = mod(manualScale, modValue) + 0.06;
-    float scale = mod(manualScale, modValue);
+    float scale = mod(manualScale, modValue) + 0.1;
+    // float scale = mod(manualScale, modValue);
 
     if(numBTexes == 1) {
         if(sD == 1) {
