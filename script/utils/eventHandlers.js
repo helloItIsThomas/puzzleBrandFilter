@@ -56,15 +56,6 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
   sv.gridW = imgs[0].width;
   sv.gridH = imgs[0].height;
 
-  imgs.forEach((img) => {
-    // if images are not the same aspe ct ratio, throw an error
-    if (img.width / img.height !== sv.gridW / sv.gridH) {
-      imgs.splice(1); // Remove all but the first image
-      console.log("Images are not the same aspect ratio");
-      // throw console.error("Images are not the same aspect ratio");
-    }
-  });
-
   sv.workerDone = false;
   showLoadIcon();
 
