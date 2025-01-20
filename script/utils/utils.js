@@ -7,9 +7,16 @@ export function getAspectRatio(img) {
   const width = img.width;
   const height = img.height;
 
-  // Normalize the aspect ratio to always be <= 1
-  // return width > height ? height / width : width / height;
   return width / height;
+}
+
+export function checkAspectRatio(imgs) {
+  const aspectRatios = imgs.map((img) => getAspectRatio(img));
+  const uniqueAspectRatios = new Set(aspectRatios);
+  if (uniqueAspectRatios.size > 1) {
+    return false;
+  }
+  return true;
 }
 
 export function fitImageToWindow(img, resizeTo = "bodyRight") {
@@ -91,6 +98,8 @@ function showUserWarning(message) {
     document.body.appendChild(warningEl);
   }
 
+  // sendBugReport();
+
   // Show warning
   warningEl.textContent = message;
   warningEl.style.display = "block";
@@ -99,4 +108,35 @@ function showUserWarning(message) {
   setTimeout(() => {
     warningEl.style.display = "none";
   }, 5000);
+}
+
+function sendBugReport(message, source, lineno, colno, error) {
+  console.log("sendBugReport");
+  const bugReport = {
+    browserInfo: navigator.userAgent,
+    message: message,
+    source: source,
+    lineno: lineno,
+    colno: colno,
+    error: error,
+    parameters: {
+      recordDuration: sv.recordDuration,
+      gridResolution: sv.gridResolution,
+      cellW: sv.cellW,
+      cellH: sv.cellH,
+      speed: sv.speed,
+      color: sv.color,
+      manualScale: sv.manualScale,
+      noiseOffset: sv.noiseOffset,
+      snappiness: sv.snappiness,
+      tlThresh1: sv.tlThresh1,
+      tlThresh2: sv.tlThresh2,
+      tlThresh3: sv.tlThresh3,
+      totalSourceUploadNum: sv.totalSourceUploadNum,
+      clipDarkOutliers: sv.clipDarkOutliers,
+      clipLightOutliers: sv.clipLightOutliers,
+      scaleDynamically: sv.scaleDynamically,
+      startInvisible: sv.startInvisible,
+    },
+  };
 }

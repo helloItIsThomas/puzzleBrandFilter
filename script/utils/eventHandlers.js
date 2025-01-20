@@ -15,8 +15,12 @@ export function handleImgInputAtRuntime(p) {
       p.loadImage(_file.data, async function (img) {
         sv.animUnderImgs.push(img);
         if (sv.animUnderImgs.length === sv.totalSourceUploadNum) {
-          updateActiveImgBar();
+          if (sv.animUnderImgs.length > 2) {
+            sv.animUnderImgs = sv.animUnderImgs.slice(0, 2);
+            console.log("More than 2 images detected. Only using 2.");
+          }
           const passMeImgs = await recalculateGrid();
+          await updateActiveImgBar();
           await updateSvgIcons();
           await updateCellData(passMeImgs);
         }
@@ -53,9 +57,11 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
   sv.gridH = imgs[0].height;
 
   imgs.forEach((img) => {
-    // if images are not the same aspect ratio, throw an error
+    // if images are not the same aspe ct ratio, throw an error
     if (img.width / img.height !== sv.gridW / sv.gridH) {
-      throw console.error("Images are not the same aspect ratio");
+      imgs.splice(1); // Remove all but the first image
+      console.log("Images are not the same aspect ratio");
+      // throw console.error("Images are not the same aspect ratio");
     }
   });
 
@@ -74,7 +80,7 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
   // await updateCellData(imgs);
 }
 
-export function updateActiveImgBar() {
+export async function updateActiveImgBar() {
   // set oneActiveImage flag here
   if (sv.totalSourceUploadNum == 1) {
     sv.oneActiveImage = true;
