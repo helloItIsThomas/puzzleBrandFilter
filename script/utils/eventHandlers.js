@@ -68,7 +68,6 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
   sv.yExcess = (sv.cellH * sv.rowCount) / sv.gridH;
 
   return imgs;
-  // await updateCellData(imgs);
 }
 
 export async function updateActiveImgBar() {
