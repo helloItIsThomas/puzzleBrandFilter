@@ -139,6 +139,7 @@ window.addEventListener("resize", () => {
   resizeTimeout = setTimeout(async () => {
     initializeLoadIcon();
     const passMeImgs = await recalculateGrid();
+    await updateActiveImgBar();
     await updateSvgIcons();
     await updateCellData(passMeImgs);
 

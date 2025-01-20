@@ -223,6 +223,7 @@ colorController.onChange(async (value) => {
   if (value) sv.fillColor = sv.brandBlueConst;
   else sv.fillColor = "#000000";
   const passMeImgs = await recalculateGrid();
+  await updateActiveImgBar();
   await updateSvgIcons();
   await updateCellData(passMeImgs);
 });
@@ -267,6 +268,7 @@ inputField.addEventListener("keydown", async (event) => {
           sv.gridResolution = 1;
         }
         const passMeImgs = await recalculateGrid();
+        await updateActiveImgBar();
         await updateSvgIcons();
         await updateCellData(passMeImgs);
       }
