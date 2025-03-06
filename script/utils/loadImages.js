@@ -24,7 +24,7 @@ export async function loadSetupImages() {
     (_, i) => `/assets/brightnessSortedSVG/${i}.svg`
   );
 
-  const sourceImgPaths = ["/assets/grad.png"];
+  const sourceImgPaths = ["/assets/frame6.png"];
   sv.totalSourceUploadNum = sourceImgPaths.length;
 
   sv.animUnderImgs = [];
