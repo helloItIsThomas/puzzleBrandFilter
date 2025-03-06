@@ -1,7 +1,7 @@
 import { tick } from "../sketch";
 import { Recorder } from "canvas-record";
 import { AVC } from "media-codecs";
-import { recalculateGrid } from "./eventHandlers";
+import { recalculateGrid, updateActiveImgBar } from "./eventHandlers";
 import { updateSvgIcons } from "./loadImages";
 import { updateCellData } from "../imgProcessing/imageProcessing";
 import { sv } from "./variables.js";
@@ -30,6 +30,7 @@ export async function resizeAbsoluteContainerForRecording() {
 }
 
 export async function startRecording() {
+  console.log("Starting recording");
   try {
     sv.ticker.stop();
     document.getElementById("renderingScreen").style.display = "flex";
@@ -42,8 +43,10 @@ export async function startRecording() {
     await setupRecorder();
 
     await sv.canvasRecorder.start();
+    console.log("Recording started");
     tick(sv.canvasRecorder);
   } catch (e) {
+    console.log("Recording failed: ", e);
     sv.recordingController.setValue(false);
   }
 }

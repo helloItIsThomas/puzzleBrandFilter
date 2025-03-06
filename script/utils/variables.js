@@ -9,6 +9,7 @@ import { createGraphicsForSingleImage } from "../rendering/createShapeGraphics";
 import { shaderRendering } from "../rendering/shaderRendering";
 import { updateSvgIcons } from "./loadImages";
 import { updateClock } from "../sketch";
+import { updateActiveImgBar } from "./eventHandlers";
 export const gui = new dat.GUI({
   autoPlace: false,
 });
